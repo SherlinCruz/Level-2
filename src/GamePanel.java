@@ -7,32 +7,33 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener {
-	Timer timer;
-	int x = 10;
-	int y = 10;
-	int width = 10;
-	int height = 10;
+	Timer time;
+	int x;
+	int y;
+	Box box;
+	boolean up = false;
+	boolean down = false;
+	final int speed = 6;
 
-	GamePanel(int x, int y, int width, int height) {
-		timer = new Timer(1000 / 60, this);
-		this.x = x;
-
-		this.y = y;
-
-		this.width = width;
-
-		this.height = height;
+	GamePanel() {
+		time = new Timer(1000 / 60, this);
+		box = new Box(60, 60, 35, 35, 10, 2, Color.pink);
 	}
 
 	public void paintComponent(Graphics g) {
-		g.fillRect(220, 200, 50, 50);
-		g.setColor(Color.BLACK);
+		g.fillRect(235, 210, 50, 50);
+		box.draw(g);
+	}
+
+	public void start() {
+		time.start();
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		box.update();
+		repaint();
 
 	}
-
 }
