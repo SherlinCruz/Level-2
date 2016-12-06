@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class Box {
 	boolean empty;
@@ -31,7 +32,7 @@ public class Box {
 	}
 
 	void draw(Graphics g) {
-		g.setColor(Color.white);
+		g.setColor(color);
 		g.fillRect(x, y, width, height);
 
 	}
@@ -59,5 +60,15 @@ public class Box {
 		x = x + speedx;
 		y = y + speedy;
 		boundaryCheck();
+	}
+
+	public void add(Box box) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public Box get(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
