@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	Box box;
 	boolean up = false;
 	boolean down = false;
-	final int speed = 6;
+	final int speed = 7;
 	BoxManager manager;
 
 	GamePanel() {

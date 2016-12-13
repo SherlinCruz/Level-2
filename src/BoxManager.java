@@ -13,7 +13,7 @@ public class BoxManager {
 
 	BoxManager() {
 
-		box = new Box(60, 60, 35, 35, 10, 2, Color.white);
+		box = new Box(60, 60, (int) (Math.random() * 500) + 1, (int) (Math.random() * 500) + 1, 10, 2, Color.white);
 
 		enemyB = new ArrayList<Box>();
 	}
@@ -28,6 +28,9 @@ public class BoxManager {
 
 		}
 		manageEnemies();
+		checkEnemyBoxes();
+		cleanupEnemyBoxes();
+
 	}
 
 	void draw(Graphics g) {
@@ -51,7 +54,7 @@ public class BoxManager {
 
 		if (enemyTimer > spawnEnemyTimer) {
 
-			Box boxThree = new Box(30, 30, 15, 15, (int) (Math.random() * 10) + 1, (int) (Math.random() * 10) + 1, Color.pink);
+			Box boxThree = new Box(30, 30, 30, 30, (int) (Math.random() * 10) + 1, (int) (Math.random() * 10) + 1, Color.pink);
 
 			AddEnemy(boxThree);
 
@@ -61,8 +64,39 @@ public class BoxManager {
 
 	}
 
-	void checkBoxEaten() {
+	void checkEat(Box A, Box B) {
+
+		if ((A.x < B.x) && (A.x + A.width > B.x + B.width) && (A.y < B.y) && (A.y + A.height > B.y + B.height)) {
+
+			if (B.Alive == true) {
+				B.Alive = false;
+
+			}
+
+		}
+		System.out.println("remove");
+	}
+
+	void checkEnemyBoxes() {
+
+		for (int i = 0; i < enemyB.size(); i++) {
+			checkEat(box, enemyB.get(i));
+		}
 
 	}
 
+	void cleanupEnemyBoxes() {
+
+		for (int i = 0; i < enemyB.size(); i++) {
+
+			Box ith = enemyB.get(i);
+
+			if (ith.Alive == false) {
+				enemyB.remove(i);
+
+			}
+
+		}
+
+	}
 }
