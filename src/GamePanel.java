@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		time = new Timer(1000 / 60, this);
 		box = new Box(60, 60, 35, 35, 10, 2, Color.pink);
 
-		manager = new BoxManager();
+		manager = new BoxManager();    
 	}
 
 	public void paintComponent(Graphics g) {
