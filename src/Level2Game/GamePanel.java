@@ -1,15 +1,19 @@
 package Level2Game;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener {
+
 	Timer timer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
@@ -41,6 +45,7 @@ public class GamePanel implements ActionListener {
 		} else if (currentState == END_STATE) {
 			drawEndState(g);
 		}
+
 	}
 
 	void updateMenuState() {
@@ -64,29 +69,31 @@ public class GamePanel implements ActionListener {
 		g.drawString("EndlessJump", 65, 100);
 
 		g.setFont(enterFont);
-		g.setColor(Color.white);
+		g.setColor(Color.black);
 		g.drawString("Press ENTER to start ", 130, 200);
 
 		g.setFont(spaceFont);
-		g.setColor(Color.white);
+		g.setColor(Color.black);
 		g.drawString("Press SPACE for intructions", 100, 300);
 
 	}
 
 	void drawGameState(Graphics g) {
 		g.setColor(Color.black);
+		g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
 
 	}
 
 	void drawEndState(Graphics g) {
 		g.setColor(Color.red);
 		g.fillRect(0, 0, 500, 500);
-
+		g.setFont(Endtitle);
 		g.drawString("You lost ! To bad ", 100, 100);
 		g.setColor(Color.pink);
 
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
@@ -97,6 +104,32 @@ public class GamePanel implements ActionListener {
 		} else if (currentState == END_STATE) {
 			updateEndState();
 		}
+		repaint();
+
+	}
+
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void keyPressed(KeyEvent e) {
+
+		System.out.println("Console");
+
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (currentState == MENU_STATE) {
+				currentState = GAME_STATE;
+
+			}
+		}
+
+	}
+
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+		// System.out.println("Console");
 
 	}
 
