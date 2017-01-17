@@ -1,28 +1,29 @@
 package Level2Game;
 
 import java.awt.Color;
-
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GamePanel extends JPanel implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	Timer timer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	int currentState = MENU_STATE;
+	Object Object;
 	Font titleFont;
 	Font enterFont;
 	Font spaceFont;
 	Font Endtitle;
+	GameManager manager;
 
 	GamePanel() {
 		timer = new Timer(1000 / 6, this);
@@ -30,6 +31,8 @@ public class GamePanel extends JPanel implements ActionListener {
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
 		Endtitle = new Font("time new roman", Font.PLAIN, 20);
+		Object = new Object(60, 60, 35, 35, 10, 2, Color.white);
+		manager = new GameManager();
 	}
 
 	void startGame() {
@@ -49,11 +52,13 @@ public class GamePanel extends JPanel implements ActionListener {
 	}
 
 	void updateMenuState() {
-
+		System.out.println("UpdateMenuState");
 	}
 
 	void updateGameState() {
-
+		manager.update();
+		System.out.println("UpdateGameState");
+		Object.update();
 	}
 
 	void updateEndState() {
@@ -62,7 +67,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
 	void drawMenuState(Graphics g) {
 
-		g.setColor(Color.BLACK);
+		g.setColor(Color.yellow);
 
 		g.setFont(titleFont);
 		g.setColor(Color.pink);
@@ -79,8 +84,11 @@ public class GamePanel extends JPanel implements ActionListener {
 	}
 
 	void drawGameState(Graphics g) {
-		g.setColor(Color.black);
+		g.setColor(Color.green);
 		g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
+		manager.draw(g);
+		Object.draw(getGraphics());
+		Object.update();
 
 	}
 
@@ -99,17 +107,15 @@ public class GamePanel extends JPanel implements ActionListener {
 
 		if (currentState == MENU_STATE) {
 			updateMenuState();
+			System.out.println("Menu State");
 		} else if (currentState == GAME_STATE) {
 			updateGameState();
+			System.out.println("Game State");
 		} else if (currentState == END_STATE) {
 			updateEndState();
+			System.out.println("End State");
 		}
 		repaint();
-
-	}
-
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -129,7 +135,13 @@ public class GamePanel extends JPanel implements ActionListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
-		// System.out.println("Console");
+		System.out.println("Console");
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 

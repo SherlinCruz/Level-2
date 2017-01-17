@@ -1,7 +1,7 @@
 package Level2Game;
 
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
@@ -12,6 +12,12 @@ public class EndlessJump {
 	JFrame frame;
 	GamePanel gamepanel;
 
+	int x;
+	int y;
+	int rectwidth;
+	int rectheight;
+	Rectangle rectangle = new Rectangle();
+
 	public static void main(String[] args) {
 		EndlessJump EndlessJump = new EndlessJump();
 
@@ -20,6 +26,8 @@ public class EndlessJump {
 	EndlessJump() {
 		frame = new JFrame();
 		gamepanel = new GamePanel();
+		frame.addKeyListener(gamepanel);
+
 		setup();
 
 	}

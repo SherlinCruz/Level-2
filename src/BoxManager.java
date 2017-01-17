@@ -31,7 +31,7 @@ public class BoxManager {
 		checkEnemyBoxes();
 		cleanupEnemyBoxes();
 
-	}
+	}  
 
 	void draw(Graphics g) {
 		box.draw(g);
