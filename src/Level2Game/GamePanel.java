@@ -18,7 +18,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	int currentState = MENU_STATE;
-	Object Object;
+	Animal animal;
+	Animal cactus;
 	Font titleFont;
 	Font enterFont;
 	Font spaceFont;
@@ -27,11 +28,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	GamePanel() {
 		timer = new Timer(1000 / 6, this);
+		animal = new Animal(60, 60, 0, 450, 0, 0, Color.black);
+		cactus = new Animal(15, 15, 0, 450, 5, 0, Color.green);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
 		Endtitle = new Font("time new roman", Font.PLAIN, 20);
-		Object = new Object(60, 60, 35, 35, 10, 2, Color.white);
+
 		manager = new GameManager();
 	}
 
@@ -48,7 +51,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		} else if (currentState == END_STATE) {
 			drawEndState(g);
 		}
-
+		manager = new GameManager();
 	}
 
 	void updateMenuState() {
@@ -58,7 +61,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		manager.update();
 		System.out.println("UpdateGameState");
-		Object.update();
+		animal.update();
+		animal.draw(getGraphics());
 	}
 
 	void updateEndState() {
@@ -84,17 +88,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
-		g.setColor(Color.green);
+		g.setColor(Color.yellow);
 		g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
 		manager.draw(g);
-		Object.draw(getGraphics());
-		Object.update();
+		animal.draw(g);
+		animal.update();
 
 	}
 
 	void drawEndState(Graphics g) {
 		g.setColor(Color.red);
-		g.fillRect(0, 0, 500, 500);
+		g.fillRect(500, 0, 500, 500);
 		g.setFont(Endtitle);
 		g.drawString("You lost ! To bad ", 100, 100);
 		g.setColor(Color.pink);
@@ -104,7 +108,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
+		manager.update();
 		if (currentState == MENU_STATE) {
 			updateMenuState();
 			System.out.println("Menu State");

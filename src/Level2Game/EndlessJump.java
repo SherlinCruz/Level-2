@@ -24,6 +24,7 @@ public class EndlessJump {
 	}
 
 	EndlessJump() {
+
 		frame = new JFrame();
 		gamepanel = new GamePanel();
 		frame.addKeyListener(gamepanel);

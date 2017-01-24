@@ -31,7 +31,7 @@ public class BoxManager {
 		checkEnemyBoxes();
 		cleanupEnemyBoxes();
 
-	}  
+	}
 
 	void draw(Graphics g) {
 		box.draw(g);
@@ -54,7 +54,8 @@ public class BoxManager {
 
 		if (enemyTimer > spawnEnemyTimer) {
 
-			Box boxThree = new Box(30, 30, 30, 30, (int) (Math.random() * 10) + 1, (int) (Math.random() * 10) + 1, Color.pink);
+			Box boxThree = new Box(30, 30, 30, 30, (int) (Math.random() * 10) + 1, (int) (Math.random() * 10) + 1,
+					Color.pink);
 
 			AddEnemy(boxThree);
 
@@ -74,7 +75,7 @@ public class BoxManager {
 			}
 
 		}
-		System.out.println("remove");
+
 	}
 
 	void checkEnemyBoxes() {
