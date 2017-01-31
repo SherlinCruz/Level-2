@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	GamePanel() {
 		timer = new Timer(1000 / 6, this);
-		animal = new Animal(60, 60, 0, 450, 0, 0, Color.black);
+		animal = new Animal(30, 30, 0, 450, 5, 0, Color.black);
 		cactus = new Animal(15, 15, 0, 450, 5, 0, Color.green);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
@@ -55,12 +55,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateMenuState() {
-		System.out.println("UpdateMenuState");
+		// System.out.println("UpdateMenuState");
 	}
 
 	void updateGameState() {
 		manager.update();
-		System.out.println("UpdateGameState");
+		// System.out.println("UpdateGameState");
 		animal.update();
 		animal.draw(getGraphics());
 	}
@@ -111,13 +111,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		manager.update();
 		if (currentState == MENU_STATE) {
 			updateMenuState();
-			System.out.println("Menu State");
+			// System.out.println("Menu State");
 		} else if (currentState == GAME_STATE) {
 			updateGameState();
-			System.out.println("Game State");
+			// System.out.println("Game State");
 		} else if (currentState == END_STATE) {
 			updateEndState();
-			System.out.println("End State");
+			// System.out.println("End State");
 		}
 		repaint();
 
@@ -132,8 +132,24 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				currentState = GAME_STATE;
 
 			}
-		}
 
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			System.out.println("UP");
+
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			System.out.println("DOWN");
+
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			System.out.println("LEFT");
+
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			System.out.println("RIGHT");
+
+		}
 	}
 
 	public void keyReleased(KeyEvent e) {

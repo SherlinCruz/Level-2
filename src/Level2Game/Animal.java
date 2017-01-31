@@ -36,7 +36,7 @@ public class Animal {
 	void draw(Graphics g) {
 		g.setColor(color);
 		g.fillOval(x, y, width, height);
-		System.out.println("Object");
+		//System.out.println("Object");
 
 	}
 

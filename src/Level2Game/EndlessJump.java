@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
-public class EndlessJump {
+public class EndlessJump implements KeyListener {
 
 	final static int width = 500;
 	final static int height = 500;
@@ -38,7 +38,26 @@ public class EndlessJump {
 		frame.setVisible(true);
 		frame.setSize(width, height);
 		gamepanel.startGame();
+		gamepanel.addKeyListener(this);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 

@@ -13,12 +13,12 @@ public class GamePanel extends JPanel implements ActionListener {
 	Box box;
 	boolean up = false;
 	boolean down = false;
-	final int speed = 7;
+	final int speed =  7;
 	BoxManager manager;
 
 	GamePanel() {
 		time = new Timer(1000 / 60, this);
-		box = new Box(60, 60, 35, 35, 10, 2, Color.pink);
+		box = new Box(60, 60, 35, 35, 0,0, Color.pink);
 
 		manager = new BoxManager();    
 	}
