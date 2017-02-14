@@ -60,8 +60,8 @@ public class Animal {
 	}
 
 	void update() {
-		x = x + speedx;
-		y = y + speedy;
+	/*	x = x + speedx;
+		y = y + speedy;*/
 		boundaryCheck();
 	}
 }

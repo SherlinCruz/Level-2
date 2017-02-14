@@ -7,12 +7,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
-
+	BufferedImage image;
 	Timer timer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
@@ -28,14 +31,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	GamePanel() {
 		timer = new Timer(1000 / 6, this);
-		animal = new Animal(30, 30, 0, 450, 5, 0, Color.black);
+		animal = new Animal(30, 30, 0, 450, 5, 5, Color.black);
 		cactus = new Animal(15, 15, 0, 450, 5, 0, Color.green);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
 		Endtitle = new Font("time new roman", Font.PLAIN, 20);
-
 		manager = new GameManager();
+
+		try {
+
+			image = ImageIO.read(getClass().getResource("movingBackgroud.jpg"));
+
+		} catch (Exception e) {
+
+		}
 	}
 
 	void startGame() {
@@ -60,7 +70,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		manager.update();
-		// System.out.println("UpdateGameState");
+		System.out.println("UpdateGameState");
 		animal.update();
 		animal.draw(getGraphics());
 	}
@@ -92,7 +102,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
 		manager.draw(g);
 		animal.draw(g);
-		animal.update();
+		// animal.update();
 
 	}
 
@@ -136,26 +146,27 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			System.out.println("UP");
-
+			animal.y = animal.y - animal.speedy;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			System.out.println("DOWN");
 
+			animal.y = animal.y + animal.speedy;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			System.out.println("LEFT");
 
+			animal.x = animal.x - animal.speedx;
+
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			System.out.println("RIGHT");
-
+			animal.x = animal.x + animal.speedx;
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
-		System.out.println("Console");
 
 	}
 
