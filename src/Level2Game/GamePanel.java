@@ -21,18 +21,28 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	int currentState = MENU_STATE;
-	Animal animal;
-	Animal cactus;
+	int backgroundSpeed = 8;
+	boolean risen;
+	int gravity = 3;
+	int srcx1 = 0;
+	int srcx2 = 0;
+	int width = 0;
+	int height = 0;
+	int imageWidth = 0;
+	Animal player;
+	Animal obstacle;
 	Font titleFont;
 	Font enterFont;
 	Font spaceFont;
 	Font Endtitle;
 	GameManager manager;
 
-	GamePanel() {
+	GamePanel(int w, int h) {
+		width = w;
+		height = h;
 		timer = new Timer(1000 / 6, this);
-		animal = new Animal(30, 30, 0, 450, 5, 5, Color.black);
-		cactus = new Animal(15, 15, 0, 450, 5, 0, Color.green);
+		player = new Animal(30, 30, 0, 450, 5, 15, Color.white);
+		obstacle = new Animal(15, 15, 0, 450, 5, 0, Color.green);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
@@ -41,11 +51,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		try {
 
-			image = ImageIO.read(getClass().getResource("movingBackgroud.jpg"));
+			image = ImageIO.read(getClass().getResource("movingBackground.jpg"));
+			imageWidth = image.getWidth();
 
 		} catch (Exception e) {
+			System.err.println("Couldn't find this image: " + image);
 
 		}
+
 	}
 
 	void startGame() {
@@ -57,6 +70,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (currentState == MENU_STATE) {
 			drawMenuState(g);
 		} else if (currentState == GAME_STATE) {
+			g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, 0, this);
+			obstacle.draw(g);
 			drawGameState(g);
 		} else if (currentState == END_STATE) {
 			drawEndState(g);
@@ -71,8 +86,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		manager.update();
 		System.out.println("UpdateGameState");
-		animal.update();
-		animal.draw(getGraphics());
+		player.update();
+		player.draw(getGraphics());
 	}
 
 	void updateEndState() {
@@ -98,11 +113,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
-		g.setColor(Color.yellow);
+		// g.setColor(Color.yellow);
 		g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
-		manager.draw(g);
-		animal.draw(g);
-		// animal.update();
+		// manager.draw(g);
+		player.draw(g);
+		g.drawImage(image, 0, 0, null);
+		// player.update();
 
 	}
 
@@ -123,13 +139,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			updateMenuState();
 			// System.out.println("Menu State");
 		} else if (currentState == GAME_STATE) {
+
 			updateGameState();
+			// moveBackground();
 			// System.out.println("Game State");
 		} else if (currentState == END_STATE) {
 			updateEndState();
 			// System.out.println("End State");
 		}
 		repaint();
+
+	}
+
+	void moveBackground() {
+		if (imageWidth > width) {
+			if (srcx1 >= imageWidth - width) {
+				srcx1 = 0;
+				srcx2 = width;
+			} else {
+				srcx1 += backgroundSpeed;
+				srcx2 += backgroundSpeed;
+
+			}
+		}
 
 	}
 
@@ -146,23 +178,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			System.out.println("UP");
-			animal.y = animal.y - animal.speedy;
+			player.y = player.y - player.speedy;
+			risen = true;
+			if (risen = true) {
+				player.y = player.y + gravity;
+				System.out.println("gravity works");
+			}
+			// player.y = player.y + player.speedy;
 		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			System.out.println("DOWN");
-
-			animal.y = animal.y + animal.speedy;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			System.out.println("LEFT");
-
-			animal.x = animal.x - animal.speedx;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			System.out.println("RIGHT");
-			animal.x = animal.x + animal.speedx;
-		}
+		/*
+		 * if (e.getKeyCode() == KeyEvent.VK_DOWN) { System.out.println("DOWN");
+		 * 
+		 * player.y = player.y + player.speedy; } if (e.getKeyCode() ==
+		 * KeyEvent.VK_LEFT) { System.out.println("LEFT");
+		 * 
+		 * player.x = player.x - player.speedx;
+		 * 
+		 * } if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		 * System.out.println("RIGHT"); player.x = player.x + player.speedx; }
+		 */
 	}
 
 	public void keyReleased(KeyEvent e) {

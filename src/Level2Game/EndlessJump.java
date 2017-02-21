@@ -26,9 +26,8 @@ public class EndlessJump implements KeyListener {
 	EndlessJump() {
 
 		frame = new JFrame();
-		gamepanel = new GamePanel();
+		gamepanel = new GamePanel(width, height);
 		frame.addKeyListener(gamepanel);
-
 		setup();
 
 	}

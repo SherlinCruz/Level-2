@@ -34,9 +34,9 @@ public class Animal {
 	}
 
 	void draw(Graphics g) {
+
 		g.setColor(color);
 		g.fillOval(x, y, width, height);
-		//System.out.println("Object");
 
 	}
 
@@ -60,8 +60,10 @@ public class Animal {
 	}
 
 	void update() {
-	/*	x = x + speedx;
-		y = y + speedy;*/
+
+		x = x + speedx;
+		//y = y + speedy;
+
 		boundaryCheck();
 	}
 }
