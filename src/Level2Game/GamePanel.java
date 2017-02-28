@@ -2,6 +2,7 @@ package Level2Game;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,21 +17,23 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	BufferedImage image;
+	int backgroudWidth = 0;
+
 	Timer timer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	int currentState = MENU_STATE;
-	int backgroundSpeed = 8;
+	int scrollSpeed = 8;
 	boolean risen;
-	int gravity = 3;
+	int gravity = 5;
 	int srcx1 = 0;
 	int srcx2 = 0;
 	int width = 0;
 	int height = 0;
 	int imageWidth = 0;
 	Animal player;
-	Animal obstacle;
+	// Animal obstacle;
 	Font titleFont;
 	Font enterFont;
 	Font spaceFont;
@@ -41,8 +44,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		width = w;
 		height = h;
 		timer = new Timer(1000 / 6, this);
-		player = new Animal(30, 30, 0, 450, 5, 15, Color.white);
-		obstacle = new Animal(15, 15, 0, 450, 5, 0, Color.green);
+		player = new Animal(30, 30, 0, 450, 5, 30, Color.white);
+		// obstacle = new Animal(15, 15, 0, 450, 5, 0, Color.green);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
@@ -70,13 +73,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (currentState == MENU_STATE) {
 			drawMenuState(g);
 		} else if (currentState == GAME_STATE) {
-			g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, 0, this);
-			obstacle.draw(g);
+			g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, height, this);
+			// obstacle.draw(g);
 			drawGameState(g);
 		} else if (currentState == END_STATE) {
 			drawEndState(g);
 		}
 		manager = new GameManager();
+	}
+
+	void movingBackground() {
+
+		if (srcx1 >= (backgroudWidth - width)) {
+			srcx1 = 0;
+			srcx2 = width;
+
+		} else {
+			srcx1 += scrollSpeed;
+			srcx2 += scrollSpeed;
+		}
+
 	}
 
 	void updateMenuState() {
@@ -87,7 +103,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		manager.update();
 		System.out.println("UpdateGameState");
 		player.update();
+		if (player.y + gravity < height - player.height) {
+			System.out.println("gravity works");
+
+			player.y = player.y + gravity;
+
+		}
+
 		player.draw(getGraphics());
+
 	}
 
 	void updateEndState() {
@@ -139,8 +163,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			updateMenuState();
 			// System.out.println("Menu State");
 		} else if (currentState == GAME_STATE) {
-
+			movingBackground();
 			updateGameState();
+
 			// moveBackground();
 			// System.out.println("Game State");
 		} else if (currentState == END_STATE) {
@@ -157,8 +182,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				srcx1 = 0;
 				srcx2 = width;
 			} else {
-				srcx1 += backgroundSpeed;
-				srcx2 += backgroundSpeed;
+				srcx1 += scrollSpeed;
+				srcx2 += scrollSpeed;
 
 			}
 		}
@@ -180,12 +205,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			System.out.println("UP");
 			player.y = player.y - player.speedy;
 			risen = true;
-			if (risen = true) {
-				player.y = player.y + gravity;
-				System.out.println("gravity works");
-			}
+
 			// player.y = player.y + player.speedy;
 		}
+		if (risen = true) {
+			System.out.println("gravity works");
+
+			player.y = player.y + gravity;
+
+		}
+
 		/*
 		 * if (e.getKeyCode() == KeyEvent.VK_DOWN) { System.out.println("DOWN");
 		 * 
@@ -197,6 +226,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		 * } if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 		 * System.out.println("RIGHT"); player.x = player.x + player.speedx; }
 		 */
+
 	}
 
 	public void keyReleased(KeyEvent e) {
