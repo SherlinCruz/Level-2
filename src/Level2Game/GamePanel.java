@@ -53,9 +53,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		manager = new GameManager();
 
 		try {
-
-			image = ImageIO.read(getClass().getResource("movingBackground.jpg"));
-			imageWidth = image.getWidth();
+			Thread.sleep(5);
+			image = ImageIO.read(getClass().getResource("background.jpg"));
+			backgroudWidth = image.getWidth();
 
 		} catch (Exception e) {
 			System.err.println("Couldn't find this image: " + image);
@@ -73,7 +73,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (currentState == MENU_STATE) {
 			drawMenuState(g);
 		} else if (currentState == GAME_STATE) {
-			g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, height, this);
+
 			// obstacle.draw(g);
 			drawGameState(g);
 		} else if (currentState == END_STATE) {
@@ -83,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void movingBackground() {
-
+		System.out.println(srcx1 + "," + srcx2 + "");
 		if (srcx1 >= (backgroudWidth - width)) {
 			srcx1 = 0;
 			srcx2 = width;
@@ -138,12 +138,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void drawGameState(Graphics g) {
 		// g.setColor(Color.yellow);
-		g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
+		// g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
 		// manager.draw(g);
-		player.draw(g);
-		g.drawImage(image, 0, 0, null);
+		g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, height, this);
 		// player.update();
-
+		player.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -177,15 +176,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void moveBackground() {
-		if (imageWidth > width) {
-			if (srcx1 >= imageWidth - width) {
-				srcx1 = 0;
-				srcx2 = width;
-			} else {
-				srcx1 += scrollSpeed;
-				srcx2 += scrollSpeed;
 
-			}
+		if (srcx1 >= imageWidth - width) {
+			srcx1 = 0;
+			srcx2 = width;
+		} else {
+			srcx1 += scrollSpeed;
+			srcx2 += scrollSpeed;
+
 		}
 
 	}
