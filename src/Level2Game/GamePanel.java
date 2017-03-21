@@ -17,6 +17,7 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	BufferedImage image;
+	BufferedImage cactus;
 	int backgroudWidth = 0;
 
 	Timer timer;
@@ -32,7 +33,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int width = 0;
 	int height = 0;
 	int imageWidth = 0;
-	Animal player;
+	Items player;
+	Items obstacle;
 	// Animal obstacle;
 	Font titleFont;
 	Font enterFont;
@@ -44,7 +46,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		width = w;
 		height = h;
 		timer = new Timer(1000 / 6, this);
-		player = new Animal(30, 30, 0, 450, 5, 30, Color.white);
+		player = new Items(30, 30, 0, 450, 5, 30, Color.white, null);
+		obstacle = new Items(30, 30, 0, 300, 5, 30, Color.CYAN, cactus);
+
 		// obstacle = new Animal(15, 15, 0, 450, 5, 0, Color.green);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
@@ -55,10 +59,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		try {
 			Thread.sleep(5);
 			image = ImageIO.read(getClass().getResource("background.jpg"));
+			image = ImageIO.read(getClass().getResource("catus.jpg"));
 			backgroudWidth = image.getWidth();
 
 		} catch (Exception e) {
 			System.err.println("Couldn't find this image: " + image);
+			System.err.println("Couldn't find this image: " + cactus);
 
 		}
 
@@ -141,6 +147,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		// g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
 		// manager.draw(g);
 		g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, height, this);
+
+		 g.drawImage(cactus, 0, 0, width, height, srcx1, 0, srcx2, height,this);
+
 		// player.update();
 		player.draw(g);
 	}

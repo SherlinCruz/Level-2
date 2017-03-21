@@ -2,9 +2,10 @@ package Level2Game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
-public class Animal {
-
+public class Items {
+BufferedImage i;
 	boolean empty;
 	boolean Alive;
 	Color color;
@@ -15,7 +16,7 @@ public class Animal {
 	int speedx;
 	int speedy;
 
-	Animal(int width, int height, int x, int y, int speedx, int speedy, Color color) {
+	Items(int width, int height, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {
 		this.width = width;
 		this.height = height;
 		this.x = x;
@@ -25,7 +26,7 @@ public class Animal {
 		this.color = color;
 		this.Alive = true;
 		this.empty = true;
-
+		this.i = i;
 	}
 
 	boolean isAlive() {
