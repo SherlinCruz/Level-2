@@ -5,7 +5,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Items {
-BufferedImage i;
+	
+	BufferedImage i;
 	boolean empty;
 	boolean Alive;
 	Color color;
@@ -17,6 +18,7 @@ BufferedImage i;
 	int speedy;
 
 	Items(int width, int height, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {
+		
 		this.width = width;
 		this.height = height;
 		this.x = x;
@@ -27,6 +29,7 @@ BufferedImage i;
 		this.Alive = true;
 		this.empty = true;
 		this.i = i;
+		
 	}
 
 	boolean isAlive() {
@@ -63,7 +66,7 @@ BufferedImage i;
 	void update() {
 
 		x = x + speedx;
-		//y = y + speedy;
+		// y = y + speedy;
 
 		boundaryCheck();
 	}

@@ -47,7 +47,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		height = h;
 		timer = new Timer(1000 / 6, this);
 		player = new Items(30, 30, 0, 450, 5, 30, Color.white, null);
-		obstacle = new Items(30, 30, 0, 300, 5, 30, Color.CYAN, cactus);
+		// obstacle = new Items(30, 30, 0, 300, 5, 30, Color.CYAN, cactus);
 
 		// obstacle = new Animal(15, 15, 0, 450, 5, 0, Color.green);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
@@ -58,13 +58,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		try {
 			Thread.sleep(5);
-			image = ImageIO.read(getClass().getResource("background.jpg"));
-			image = ImageIO.read(getClass().getResource("catus.jpg"));
+			image = ImageIO.read(getClass().getResource("backgroundImage.jpg"));
 			backgroudWidth = image.getWidth();
+			cactus = ImageIO.read(getClass().getResource("cactus.png"));
 
 		} catch (Exception e) {
 			System.err.println("Couldn't find this image: " + image);
-			System.err.println("Couldn't find this image: " + cactus);
 
 		}
 
@@ -89,20 +88,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void movingBackground() {
-		System.out.println(srcx1 + "," + srcx2 + "");
+
 		if (srcx1 >= (backgroudWidth - width)) {
+
 			srcx1 = 0;
 			srcx2 = width;
 
 		} else {
 			srcx1 += scrollSpeed;
 			srcx2 += scrollSpeed;
+			System.out.println("scroll");
 		}
 
 	}
 
 	void updateMenuState() {
-		// System.out.println("UpdateMenuState");
+
 	}
 
 	void updateGameState() {
@@ -111,12 +112,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		player.update();
 		if (player.y + gravity < height - player.height) {
 			System.out.println("gravity works");
-
 			player.y = player.y + gravity;
-
 		}
-
-		player.draw(getGraphics());
+		
+		
+		// player.draw(getGraphics());
 
 	}
 
@@ -143,23 +143,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
-		// g.setColor(Color.yellow);
-		// g.fillRect(0, 0, EndlessJump.width, EndlessJump.height);
-		// manager.draw(g);
+
 		g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, height, this);
 
-		 g.drawImage(cactus, 0, 0, width, height, srcx1, 0, srcx2, height,this);
+		g.drawImage(cactus, 100, 400, null, null);
 
-		// player.update();
+		// g.drawImage(cactus, 450, 10, width, height, srcx1, 0, srcx2, height,
+		// this);
+
 		player.draw(g);
+
 	}
 
 	void drawEndState(Graphics g) {
-		g.setColor(Color.red);
-		g.fillRect(500, 0, 500, 500);
-		g.setFont(Endtitle);
-		g.drawString("You lost ! To bad ", 100, 100);
-		g.setColor(Color.pink);
 
 	}
 
@@ -173,27 +169,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		} else if (currentState == GAME_STATE) {
 			movingBackground();
 			updateGameState();
-
 			// moveBackground();
-			// System.out.println("Game State");
 		} else if (currentState == END_STATE) {
 			updateEndState();
 			// System.out.println("End State");
 		}
 		repaint();
-
-	}
-
-	void moveBackground() {
-
-		if (srcx1 >= imageWidth - width) {
-			srcx1 = 0;
-			srcx2 = width;
-		} else {
-			srcx1 += scrollSpeed;
-			srcx2 += scrollSpeed;
-
-		}
 
 	}
 
@@ -208,13 +189,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 
 		}
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			System.out.println("UP");
-			player.y = player.y - player.speedy;
-			risen = true;
+		if (player.y > 320) {
+			if (e.getKeyCode() == KeyEvent.VK_UP) {
+				System.out.println("UP");
+				player.y = player.y - player.speedy;
+				risen = true;
 
-			// player.y = player.y + player.speedy;
+				// player.y = player.y + player.speedy;
+			}
 		}
+
 		if (risen = true) {
 			System.out.println("gravity works");
 
