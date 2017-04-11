@@ -1,13 +1,12 @@
 package Level2Game;
 
-
 import java.awt.Graphics;
-
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameManager {
-	ArrayList<GameObject> objects;
+	ArrayList<Item> objects;
 
 	private int score = 0;
 
@@ -15,16 +14,16 @@ public class GameManager {
 	int enemySpawnTime = 1000;
 
 	public GameManager() {
-		objects = new ArrayList<GameObject>();
+		objects = new ArrayList<Item>();
 	}
 
-	public void addObject(GameObject o) {
+	public void addObject(Item o) {
 		objects.add(o);
 	}
 
 	public void update() {
 		for (int i = 0; i < objects.size(); i++) {
-			GameObject o = objects.get(i);
+			Item o = objects.get(i);
 			o.update();
 		}
 
@@ -33,14 +32,14 @@ public class GameManager {
 
 	public void draw(Graphics g) {
 		for (int i = 0; i < objects.size(); i++) {
-			GameObject o = objects.get(i);
+			Item o = objects.get(i);
 			o.draw(g);
 		}
 	}
 
 	private void purgeObjects() {
 		for (int i = 0; i < objects.size(); i++) {
-			if (!objects.get(i).isAlive) {
+			if (!objects.get(i).isAlive()) {
 				objects.remove(i);
 			}
 		}
@@ -57,4 +56,5 @@ public class GameManager {
 	public void reset() {
 		objects.clear();
 	}
+
 }

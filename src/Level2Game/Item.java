@@ -2,10 +2,11 @@ package Level2Game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Items {
-	
+public class Item {
+
 	BufferedImage i;
 	boolean empty;
 	boolean Alive;
@@ -16,9 +17,10 @@ public class Items {
 	int y;
 	int speedx;
 	int speedy;
+	Rectangle box;
 
-	Items(int width, int height, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {
-		
+	Item(int width, int height, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {
+
 		this.width = width;
 		this.height = height;
 		this.x = x;
@@ -29,7 +31,8 @@ public class Items {
 		this.Alive = true;
 		this.empty = true;
 		this.i = i;
-		
+		box = new Rectangle(x, y, width, height);
+
 	}
 
 	boolean isAlive() {
@@ -69,5 +72,10 @@ public class Items {
 		// y = y + speedy;
 
 		boundaryCheck();
+	}
+
+	public int getWidth(Object object) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

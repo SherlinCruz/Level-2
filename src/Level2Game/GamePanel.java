@@ -19,7 +19,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	BufferedImage image;
 	BufferedImage cactus;
 	int backgroudWidth = 0;
-
 	Timer timer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
@@ -33,9 +32,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int width = 0;
 	int height = 0;
 	int imageWidth = 0;
-	Items player;
-	Items obstacle;
-	// Animal obstacle;
+	Item player;
 	Font titleFont;
 	Font enterFont;
 	Font spaceFont;
@@ -46,10 +43,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		width = w;
 		height = h;
 		timer = new Timer(1000 / 6, this);
-		player = new Items(30, 30, 0, 450, 5, 30, Color.white, null);
-		// obstacle = new Items(30, 30, 0, 300, 5, 30, Color.CYAN, cactus);
-
-		// obstacle = new Animal(15, 15, 0, 450, 5, 0, Color.green);
+		player = new Item(30, 30, 0, 450, 5, 30, Color.white, null);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
@@ -79,7 +73,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			drawMenuState(g);
 		} else if (currentState == GAME_STATE) {
 
-			// obstacle.draw(g);
 			drawGameState(g);
 		} else if (currentState == END_STATE) {
 			drawEndState(g);
@@ -108,14 +101,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		manager.update();
-		System.out.println("UpdateGameState");
 		player.update();
 		if (player.y + gravity < height - player.height) {
 			System.out.println("gravity works");
 			player.y = player.y + gravity;
 		}
-		
-		
+
 		// player.draw(getGraphics());
 
 	}
@@ -156,6 +147,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawEndState(Graphics g) {
+		g.setColor(Color.GREEN);
+		g.drawString("END GAME", 100, 280);
 
 	}
 
@@ -174,6 +167,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			updateEndState();
 			// System.out.println("End State");
 		}
+
+		if (player.equals(cactus)) {
+			
+		}
+
 		repaint();
 
 	}
@@ -189,7 +187,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 
 		}
-		if (player.y > 320) {
+		if (player.y > 300) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				System.out.println("UP");
 				player.y = player.y - player.speedy;
@@ -204,13 +202,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 			player.y = player.y + gravity;
 
+			if (player.y < -1) {
+				gravity = 0;
+
+			}
+
 		}
 
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			System.out.println("DOWN ERROR");
+
+			// player.y = player.y + player.speedy;
+		}
 		/*
-		 * if (e.getKeyCode() == KeyEvent.VK_DOWN) { System.out.println("DOWN");
-		 * 
-		 * player.y = player.y + player.speedy; } if (e.getKeyCode() ==
-		 * KeyEvent.VK_LEFT) { System.out.println("LEFT");
+		 * if (e.getKeyCode() == KeyEvent.VK_LEFT) { System.out.println("LEFT");
 		 * 
 		 * player.x = player.x - player.speedx;
 		 * 
