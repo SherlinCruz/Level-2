@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 public class EndlessJump implements KeyListener {
 
 	final static int width = 500;
-	final static int height = 500;
+	final static int height = 502;
 	JFrame frame;
 	GamePanel gamepanel;
 

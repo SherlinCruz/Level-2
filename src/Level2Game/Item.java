@@ -64,13 +64,14 @@ public class Item {
 			speedy = -speedy;
 			System.out.println("y > 500");
 		}
+
 	}
 
 	void update() {
 
 		x = x + speedx;
 		// y = y + speedy;
-
+		box.setBounds(x, y, width, height);
 		boundaryCheck();
 	}
 
