@@ -11,7 +11,6 @@ public class EndlessJump implements KeyListener {
 	final static int height = 502;
 	JFrame frame;
 	GamePanel gamepanel;
-
 	int x;
 	int y;
 	int rectwidth;

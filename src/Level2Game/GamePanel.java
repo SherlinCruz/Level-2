@@ -20,13 +20,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	BufferedImage image;
 	BufferedImage cactus;
 	Rectangle cactusBox;
+	Rectangle finishBox;
 	int cactusX = 100;
 	int cactusY = 400;
+	int finishX = 465;
+	int finishY = 465;
+
 	int backgroudWidth = 0;
 	Timer timer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
+	final int WIN_STATE = 3;
 	int currentState = MENU_STATE;
 	int scrollSpeed = 8;
 	boolean risen;
@@ -36,8 +41,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int width = 0;
 	int height = 0;
 	int imageWidth = 0;
-	Item player;
 
+	Item player;
+	Item finish;
 	Font titleFont;
 	Font enterFont;
 	Font spaceFont;
@@ -49,20 +55,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		height = h;
 		timer = new Timer(1000 / 6, this);
 		player = new Item(30, 30, 0, 450, 5, 30, Color.white, null);
+		finish = new Item(30, 30, 465, 465, 0, 0, Color.red, null);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
 		Endtitle = new Font("time new roman", Font.PLAIN, 20);
-	
-		
-		
 
 		try {
 			Thread.sleep(5);
 			image = ImageIO.read(getClass().getResource("backgroundImage.jpg"));
 			backgroudWidth = image.getWidth();
 			cactus = ImageIO.read(getClass().getResource("cactus.png"));
+
 			cactusBox = new Rectangle(cactusX, cactusY, cactus.getWidth(), cactus.getHeight());
+
+			finishBox = new Rectangle(finishX, finishY, 30, 30);
+
 		} catch (Exception e) {
 			System.err.println("Couldn't find this image: " + image);
 
@@ -108,6 +116,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		// manager.update();
 		player.update();
+		finish.update();
 		if (player.y + gravity < height - player.height) {
 			System.out.println("gravity works");
 			player.y = player.y + gravity;
@@ -116,6 +125,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateEndState() {
+
+	}
+
+	void updateWinState() {
 
 	}
 
@@ -142,8 +155,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, height, this);
 		g.drawImage(cactus, cactusX, cactusY, null, null);
 		player.draw(g);
-		
-	
+		g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
+		finish.draw(g);
+		g.drawRect(finish.x, finish.y, finish.width, finish.height);
 
 	}
 
@@ -155,14 +169,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	
-	
-	void winningObject(Graphics g){
-		
-		g.draw3DRect(getX(), getY(), backgroudWidth, height, risen);
-		
+	void drawWinState(Graphics g) {
+
+		g.setColor(Color.BLACK);
+		g.setFont(titleFont);
+		g.drawString("You Won ! ", 95, 240);
+
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -173,18 +187,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		} else if (currentState == GAME_STATE) {
 			movingBackground();
 			updateGameState();
-			// moveBackground();
+
 		} else if (currentState == END_STATE) {
 			updateEndState();
 
 		}
 
-		if (cactusX == player.x || cactusY == player.y
-		/* || cactusX == player.y || cactusY == player.x */) {
+		if (player.box.intersects(cactusBox)) {
 			System.out.println("CACTUS");
 
 			currentState = END_STATE;
 
+		}
+
+		if (player.box.intersects(finishBox)) {
+			System.out.println("You Won");
+
+			currentState = WIN_STATE;
 		}
 
 		repaint();
@@ -202,7 +221,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 
 		}
-		if (player.y > 300) {
+		if (player.y > 355) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				System.out.println("UP");
 				player.y = player.y - player.speedy;
