@@ -17,16 +17,18 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
+	int frameY = EndlessJump.height;
+	int frameX = EndlessJump.width;
 	BufferedImage image;
 	BufferedImage cactus;
 	Rectangle cactusBox;
 	Rectangle finishBox;
 	int cactusX = 100;
 	int cactusY = 400;
-	int finishX = 465;
-	int finishY = 465;
-
-	int backgroudWidth = 0;
+	int playerWidth = 30;
+	int playerHeight = 30;
+	int finishX = frameX - playerWidth;
+	int finishY = frameY - playerHeight;
 	Timer timer;
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
@@ -38,8 +40,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int gravity = 5;
 	int srcx1 = 0;
 	int srcx2 = 0;
-	int width = 0;
-	int height = 0;
 	int imageWidth = 0;
 
 	Item player;
@@ -50,12 +50,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font Endtitle;
 	GameManager manager;
 
-	GamePanel(int w, int h) {
-		width = w;
-		height = h;
+	GamePanel() {
+
 		timer = new Timer(1000 / 6, this);
-		player = new Item(30, 30, 0, 450, 5, 30, Color.white, null);
-		finish = new Item(30, 30, 465, 465, 0, 0, Color.red, null);
+		player = new Item(playerWidth, playerHeight, playerWidth, frameY - playerHeight, 5, 30, Color.white, null);
+		finish = new Item(playerWidth, playerHeight, finishX, finishY, 0, 0, Color.red, null);
 		titleFont = new Font("time new roman", Font.PLAIN, 48);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
@@ -64,7 +63,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		try {
 			Thread.sleep(5);
 			image = ImageIO.read(getClass().getResource("backgroundImage.jpg"));
-			backgroudWidth = image.getWidth();
+			imageWidth = image.getWidth();
 			cactus = ImageIO.read(getClass().getResource("cactus.png"));
 
 			cactusBox = new Rectangle(cactusX, cactusY, cactus.getWidth(), cactus.getHeight());
@@ -96,14 +95,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void movingBackground() {
 
-		if (srcx1 >= (backgroudWidth - width)) {
+		if (srcx1 >= (imageWidth - frameX)) {
 
 			srcx1 = 0;
-			srcx2 = width;
+
+			srcx2 = frameX;
 
 		} else {
+
 			srcx1 += scrollSpeed;
+
 			srcx2 += scrollSpeed;
+
 			System.out.println("scroll");
 		}
 
@@ -117,7 +120,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		// manager.update();
 		player.update();
 		finish.update();
-		if (player.y + gravity < height - player.height) {
+		if (player.y + gravity <= frameY - player.height) {
 			System.out.println("gravity works");
 			player.y = player.y + gravity;
 		}
@@ -152,13 +155,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void drawGameState(Graphics g) {
 
-		g.drawImage(image, 0, 0, width, height, srcx1, 0, srcx2, height, this);
+		g.drawImage(image, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
 		g.drawImage(cactus, cactusX, cactusY, null, null);
 		player.draw(g);
 		g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
 		finish.draw(g);
 		g.drawRect(finish.x, finish.y, finish.width, finish.height);
 
+	
+	
 	}
 
 	void drawEndState(Graphics g) {
@@ -221,6 +226,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 
 		}
+		// NEED TO FIX
 		if (player.y > 355) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				System.out.println("UP");

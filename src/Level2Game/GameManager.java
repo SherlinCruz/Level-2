@@ -9,6 +9,7 @@ import java.util.Random;
 public class GameManager {
 
 	ArrayList<Item> object;
+	
 	private int score = 0;
 
 	long enemyTimer = 0;

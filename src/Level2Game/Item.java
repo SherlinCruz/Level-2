@@ -52,7 +52,7 @@ public class Item {
 			speedx = -speedx;
 			System.out.println("x > 0");
 		}
-		if (x > 500) {
+		if (x > EndlessJump.width) {
 			speedx = -speedx;
 			System.out.println("x < 500");
 		}
@@ -60,7 +60,7 @@ public class Item {
 			speedy = -speedy;
 			System.out.println("y < 0");
 		}
-		if (y > 500) {
+		if (y > EndlessJump.height - height) {
 			speedy = -speedy;
 			System.out.println("y > 500");
 		}
