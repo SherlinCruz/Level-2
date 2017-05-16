@@ -3,46 +3,62 @@ package Level2Game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class GameManager {
 
-	ArrayList<Item> object;
-	
-	private int score = 0;
+	// score will be coded here?
 
-	long enemyTimer = 0;
-	int enemySpawnTime = 1000;
+	Random randomNumber = new Random();
 
-	public GameManager() {
+	int value = randomNumber.nextInt(100);
 
-		object = new ArrayList<>();
+	int width = value;
+	int height = value;
+	int x = value;
+	int y = value;
 
-	}
+	GameManager() {
 
-	public void addObject(Item o) {
-		object.add(o);
+		ArrayList<Item> items = new ArrayList<Item>();
+
+		Item cactusItem;
+
+		try {
+
+			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus.png"));
+
+			cactusItem = new Item(width, height, x, y, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(width, height, x, y, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+		}
+
+		catch (Exception e) {
+
+			System.err.println("Couldn't find this image: " + items);
+
+		}
+
 	}
 
 	public void update() {
-		for (int i = 0; i < object.size(); i++) {
-			Item o = object.get(i);
-			o.update();
-		}
 
 	}
 
 	public void draw(Graphics g) {
-		for (int i = 0; i < object.size(); i++) {
-			Item o = object.get(i);
-			o.draw(g);
-		}
+
 	}
 
-
 	public void reset() {
-		object.clear();
+
 	}
 
 }

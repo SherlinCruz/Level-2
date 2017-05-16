@@ -62,8 +62,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		try {
 			Thread.sleep(5);
+
 			image = ImageIO.read(getClass().getResource("backgroundImage.jpg"));
+
 			imageWidth = image.getWidth();
+
 			cactus = ImageIO.read(getClass().getResource("cactus.png"));
 
 			cactusBox = new Rectangle(cactusX, cactusY, cactus.getWidth(), cactus.getHeight());
@@ -71,6 +74,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			finishBox = new Rectangle(finishX, finishY, 30, 30);
 
 		} catch (Exception e) {
+
 			System.err.println("Couldn't find this image: " + image);
 
 		}
@@ -78,6 +82,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void startGame() {
+
 		timer.start();
 
 	}
@@ -89,6 +94,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			drawGameState(g);
 		} else if (currentState == END_STATE) {
 			drawEndState(g);
+		} else if (currentState == WIN_STATE) {
+			drawWinState(g);
 		}
 
 	}
@@ -162,15 +169,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		finish.draw(g);
 		g.drawRect(finish.x, finish.y, finish.width, finish.height);
 
-	
-	
 	}
 
 	void drawEndState(Graphics g) {
 
 		g.setColor(Color.BLACK);
 		g.setFont(titleFont);
-		g.drawString("END GAME", 95, 240);
+		g.drawString("END GAME", 250, 240);
 
 	}
 
@@ -178,7 +183,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.setColor(Color.BLACK);
 		g.setFont(titleFont);
-		g.drawString("You Won ! ", 95, 240);
+		g.drawString("You Won ! ", 250, 240);
 
 	}
 
@@ -197,16 +202,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			updateEndState();
 
 		}
-
 		if (player.box.intersects(cactusBox)) {
 			System.out.println("CACTUS");
 
 			currentState = END_STATE;
 
 		}
-
 		if (player.box.intersects(finishBox)) {
-			System.out.println("You Won");
 
 			currentState = WIN_STATE;
 		}
