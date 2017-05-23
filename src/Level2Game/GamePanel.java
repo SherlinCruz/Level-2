@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
+
 	int frameY = EndlessJump.height;
 	int frameX = EndlessJump.width;
 	BufferedImage image;
@@ -148,26 +149,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.setFont(titleFont);
 		g.setColor(Color.pink);
-		g.drawString("EndlessJump", 65, 100);
+		g.drawString("EndlessJump", 95, 300);
 
 		g.setFont(enterFont);
 		g.setColor(Color.black);
-		g.drawString("Press ENTER to start ", 130, 200);
+		g.drawString("Press ENTER to start ", 230, 300);
 
 		g.setFont(spaceFont);
 		g.setColor(Color.black);
-		g.drawString("Press SPACE for intructions", 100, 300);
+		g.drawString("Press SPACE for intructions", 200, 3400);
 
 	}
 
 	void drawGameState(Graphics g) {
-
 		g.drawImage(image, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
-		g.drawImage(cactus, cactusX, cactusY, null, null);
-		player.draw(g);
+		g.drawImage(cactus, cactusX, cactusY, null, null);// makes the cactus
 		g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
-		finish.draw(g);
+		// draws the outline of the cactus image
+
+		player.draw(g);
 		g.drawRect(finish.x, finish.y, finish.width, finish.height);
+		finish.draw(g);// red dot
+		g.drawImage(cactus, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY,this);
+		
 
 	}
 

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class Item {
 
@@ -19,10 +20,30 @@ public class Item {
 	int speedy;
 	Rectangle box;
 
-	Item(int width, int height, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {
+	Item(int gameWidth, int gameHeight, int speedx, int speedy, Color color, BufferedImage i) {
 
-		this.width = width;
-		this.height = height;
+		Random randomNumber = new Random();
+
+		int randomValue1 = randomNumber.nextInt(500);
+
+		this.width = randomNumber.nextInt(20) + 20;
+		this.height = randomNumber.nextInt(60) + 20;
+		this.x = randomNumber.nextInt(gameWidth);
+		this.y = randomNumber.nextInt(gameHeight);
+		this.speedx = speedx;
+		this.speedy = speedy;
+		this.color = color;
+		this.Alive = true;
+		this.empty = true;
+		this.i = i;
+		box = new Rectangle(x, y, width, height);
+
+	}
+
+	Item(int itemWidth, int itemHeight, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {
+
+		this.width = itemWidth;
+		this.height = itemHeight;
 		this.x = x;
 		this.y = y;
 		this.speedx = speedx;
