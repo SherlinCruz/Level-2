@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -18,30 +19,31 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
-	int frameY = EndlessJump.height;
-	int frameX = EndlessJump.width;
-	BufferedImage image;
-	BufferedImage cactus;
-	Rectangle cactusBox;
+	BufferedImage backgroundImage;
+	// BufferedImage cactus;
+	// Rectangle cactusBox;
 	Rectangle finishBox;
-	int cactusX = 100;
-	int cactusY = 400;
-	int playerWidth = 30;
-	int playerHeight = 30;
-	int finishX = frameX - playerWidth;
-	int finishY = frameY - playerHeight;
-	Timer timer;
+
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	final int WIN_STATE = 3;
-	int currentState = MENU_STATE;
-	int scrollSpeed = 8;
-	boolean risen;
+
+	int frameY = EndlessJump.height;
+	int frameX = EndlessJump.width;
+	/// int cactusX = 100;
+	/// int cactusY = 400;
+	int playerWidth = 30;
+	int playerHeight = 30;
+	int finishX = frameX - playerWidth;
+	int finishY = frameY - playerHeight;
 	int gravity = 5;
 	int srcx1 = 0;
 	int srcx2 = 0;
 	int imageWidth = 0;
+	int scrollSpeed = 8;
+	int currentState = MENU_STATE;
+	boolean Upwards;
 
 	Item player;
 	Item finish;
@@ -49,43 +51,39 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font enterFont;
 	Font spaceFont;
 	Font Endtitle;
-	GameManager manager;
+	CactusManager gameManager = new CactusManager();
+
+	Timer timer;
 
 	GamePanel() {
 
 		timer = new Timer(1000 / 6, this);
 		player = new Item(playerWidth, playerHeight, playerWidth, frameY - playerHeight, 5, 30, Color.white, null);
 		finish = new Item(playerWidth, playerHeight, finishX, finishY, 0, 0, Color.red, null);
-		titleFont = new Font("time new roman", Font.PLAIN, 48);
-		enterFont = new Font("time new roman", Font.PLAIN, 20);
-		spaceFont = new Font("time new roman", Font.PLAIN, 20);
-		Endtitle = new Font("time new roman", Font.PLAIN, 20);
+		titleFont = new Font("time new roman", Font.PLAIN, 60);
+		enterFont = new Font("time new roman", Font.PLAIN, 30);
+		spaceFont = new Font("time new roman", Font.PLAIN, 30);
+		Endtitle = new Font("time new roman", Font.PLAIN, 30);
 
 		try {
-			Thread.sleep(5);
 
-			image = ImageIO.read(getClass().getResource("backgroundImage.jpg"));
+			backgroundImage = ImageIO.read(getClass().getResource("backgroundImage.jpg"));
 
-			imageWidth = image.getWidth();
+			imageWidth = backgroundImage.getWidth();
 
-			cactus = ImageIO.read(getClass().getResource("cactus.png"));
+			// cactus = ImageIO.read(getClass().getResource("cactus.png"));
 
-			cactusBox = new Rectangle(cactusX, cactusY, cactus.getWidth(), cactus.getHeight());
+			// cactusBox = new Rectangle(cactusX, cactusY, cactus.getWidth(),
+			// cactus.getHeight());
 
 			finishBox = new Rectangle(finishX, finishY, 30, 30);
 
 		} catch (Exception e) {
 
-			System.err.println("Couldn't find this image: " + image);
+			System.err.println("Couldn't find this image: " + backgroundImage);
 
 		}
-
-	}
-
-	void startGame() {
-
 		timer.start();
-
 	}
 
 	public void paintComponent(Graphics g) {
@@ -125,7 +123,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
-		// manager.update();
+
 		player.update();
 		finish.update();
 		if (player.y + gravity <= frameY - player.height) {
@@ -149,30 +147,30 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.setFont(titleFont);
 		g.setColor(Color.pink);
-		g.drawString("EndlessJump", 95, 300);
+		g.drawString("EndlessJump", 200, 400);
 
 		g.setFont(enterFont);
 		g.setColor(Color.black);
-		g.drawString("Press ENTER to start ", 230, 300);
+		g.drawString("Press ENTER to start ", 180, 300);
 
 		g.setFont(spaceFont);
 		g.setColor(Color.black);
-		g.drawString("Press SPACE for intructions", 200, 3400);
+		g.drawString("Press SPACE for intructions", 180, 340);
 
 	}
 
 	void drawGameState(Graphics g) {
-		g.drawImage(image, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
-		g.drawImage(cactus, cactusX, cactusY, null, null);// makes the cactus
-		g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
-		// draws the outline of the cactus image
+		g.drawImage(backgroundImage, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
+		// background
 
-		player.draw(g);
+		// g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width,
+		// cactusBox.height);// draws the outline of the cactus image
+		player.draw(g);// white dot
 		g.drawRect(finish.x, finish.y, finish.width, finish.height);
 		finish.draw(g);// red dot
-		g.drawImage(cactus, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY,this);
-		
+		/// g.drawImage(cactus, frameX, frameY, null, null);
 
+		gameManager.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -206,12 +204,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			updateEndState();
 
 		}
-		if (player.box.intersects(cactusBox)) {
-			System.out.println("CACTUS");
-
-			currentState = END_STATE;
-
-		}
+		/*
+		 * if (player.box.intersects(cactusBox)) { System.out.println("CACTUS");
+		 * 
+		 * currentState = END_STATE;
+		 * 
+		 * }
+		 */
 		if (player.box.intersects(finishBox)) {
 
 			currentState = WIN_STATE;
@@ -237,7 +236,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				System.out.println("UP");
 				player.y = player.y - player.speedy;
-				risen = true;
+				Upwards = true;
 
 			}
 		}
@@ -251,6 +250,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void addKeyListener(EndlessJump l) {
 		// TODO Auto-generated method stub
 
 	}

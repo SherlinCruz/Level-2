@@ -10,13 +10,12 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class GameManager {
+public class CactusManager {
 
 	// score will be coded here?
+	ArrayList<Item> items = new ArrayList<Item>();
 
-	GameManager() {
-
-		ArrayList<Item> items = new ArrayList<Item>();
+	CactusManager() {
 
 		Item cactusItem;
 
@@ -30,8 +29,16 @@ public class GameManager {
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
 
-		}
-		catch (Exception e) {
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+		} catch (Exception e) {
 
 			System.err.println("Couldn't find this image: " + items);
 
@@ -44,6 +51,12 @@ public class GameManager {
 	}
 
 	public void draw(Graphics g) {
+
+		for (Item cactus : items) {
+
+			cactus.draw(g);
+
+		}
 
 	}
 

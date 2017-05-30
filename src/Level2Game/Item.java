@@ -53,7 +53,6 @@ public class Item {
 		this.empty = true;
 		this.i = i;
 		box = new Rectangle(x, y, width, height);
-
 	}
 
 	boolean isAlive() {
@@ -63,8 +62,12 @@ public class Item {
 
 	void draw(Graphics g) {
 
-		g.setColor(color);
-		g.fillOval(x, y, width, height);
+		if (i == null) {
+			g.setColor(color);
+			g.fillOval(x, y, width, height);
+		} else {
+			g.drawImage(i, x, y, i.getWidth(), i.getHeight(), null);
+		}
 
 	}
 
