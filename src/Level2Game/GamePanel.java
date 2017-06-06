@@ -211,7 +211,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		 * 
 		 * }
 		 */
-		if (player.box.intersects(finishBox)) {
+		if (player.cactusBox.intersects(finishBox)) {
 
 			currentState = WIN_STATE;
 		}

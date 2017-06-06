@@ -10,15 +10,16 @@ public class Item {
 
 	BufferedImage i;
 	boolean empty;
-	boolean Alive;
-	Color color;
+	boolean alive;
+
 	int width;
 	int height;
 	int x;
 	int y;
 	int speedx;
 	int speedy;
-	Rectangle box;
+	Color color;
+	Rectangle cactusBox;
 
 	Item(int gameWidth, int gameHeight, int speedx, int speedy, Color color, BufferedImage i) {
 
@@ -33,10 +34,10 @@ public class Item {
 		this.speedx = speedx;
 		this.speedy = speedy;
 		this.color = color;
-		this.Alive = true;
+		this.alive = true;
 		this.empty = true;
 		this.i = i;
-		box = new Rectangle(x, y, width, height);
+		cactusBox = new Rectangle(x, y, width, height);
 
 	}
 
@@ -49,14 +50,14 @@ public class Item {
 		this.speedx = speedx;
 		this.speedy = speedy;
 		this.color = color;
-		this.Alive = true;
+		this.alive = true;
 		this.empty = true;
 		this.i = i;
-		box = new Rectangle(x, y, width, height);
+		cactusBox = new Rectangle(x, y, width, height);
 	}
 
 	boolean isAlive() {
-		return Alive;
+		return alive;
 
 	}
 
@@ -67,6 +68,8 @@ public class Item {
 			g.fillOval(x, y, width, height);
 		} else {
 			g.drawImage(i, x, y, i.getWidth(), i.getHeight(), null);
+
+			g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
 		}
 
 	}
@@ -94,8 +97,10 @@ public class Item {
 	void update() {
 
 		x = x + speedx;
+		// allows the player to move from one side to the other side.
+
 		// y = y + speedy;
-		box.setBounds(x, y, width, height);
+		cactusBox.setBounds(x, y, width, height);
 		boundaryCheck();
 	}
 
