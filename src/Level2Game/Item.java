@@ -11,7 +11,6 @@ public class Item {
 	BufferedImage i;
 	boolean empty;
 	boolean alive;
-
 	int width;
 	int height;
 	int x;
@@ -27,8 +26,8 @@ public class Item {
 
 		int randomValue1 = randomNumber.nextInt(500);
 
-		this.width = randomNumber.nextInt(20) + 20;
-		this.height = randomNumber.nextInt(60) + 20;
+		this.width = i.getWidth();
+		this.height = i.getHeight();
 		this.x = randomNumber.nextInt(gameWidth);
 		this.y = randomNumber.nextInt(gameHeight);
 		this.speedx = speedx;
@@ -53,7 +52,7 @@ public class Item {
 		this.alive = true;
 		this.empty = true;
 		this.i = i;
-		cactusBox = new Rectangle(x, y, width, height);
+		cactusBox = new Rectangle(x, y, itemWidth, itemHeight);
 	}
 
 	boolean isAlive() {
@@ -64,12 +63,17 @@ public class Item {
 	void draw(Graphics g) {
 
 		if (i == null) {
-			g.setColor(color);
+			g.setColor(color);// white: player
+
 			g.fillOval(x, y, width, height);
+
 		} else {
 			g.drawImage(i, x, y, i.getWidth(), i.getHeight(), null);
 
 			g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
+
+			// outline
+
 		}
 
 	}
@@ -102,6 +106,7 @@ public class Item {
 		// y = y + speedy;
 		cactusBox.setBounds(x, y, width, height);
 		boundaryCheck();
+
 	}
 
 	public int getWidth(Object object) {

@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 
 public class CactusManager {
@@ -38,11 +37,43 @@ public class CactusManager {
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
 
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
 		} catch (Exception e) {
 
 			System.err.println("Couldn't find this image: " + items);
 
 		}
+
+	}
+
+	public boolean intersects(Item player) {
+
+		for (Item cactus : items) {
+			if (player.cactusBox.intersects(cactus.cactusBox)) {
+				return true;
+			}
+		}
+		return false;
 
 	}
 

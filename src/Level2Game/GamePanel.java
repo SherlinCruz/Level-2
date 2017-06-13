@@ -20,8 +20,7 @@ import javax.swing.Timer;
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	BufferedImage backgroundImage;
-	// BufferedImage cactus;
-	// Rectangle cactusBox;
+
 	Rectangle finishBox;
 
 	final int MENU_STATE = 0;
@@ -31,8 +30,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	int frameY = EndlessJump.height;
 	int frameX = EndlessJump.width;
-	/// int cactusX = 100;
-	/// int cactusY = 400;
 	int playerWidth = 30;
 	int playerHeight = 30;
 	int finishX = frameX - playerWidth;
@@ -51,7 +48,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font enterFont;
 	Font spaceFont;
 	Font Endtitle;
-	CactusManager gameManager = new CactusManager();
+	CactusManager cactusManager = new CactusManager();
 
 	Timer timer;
 
@@ -70,13 +67,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			backgroundImage = ImageIO.read(getClass().getResource("backgroundImage.jpg"));
 
 			imageWidth = backgroundImage.getWidth();
-
-			// cactus = ImageIO.read(getClass().getResource("cactus.png"));
-
-			// cactusBox = new Rectangle(cactusX, cactusY, cactus.getWidth(),
-			// cactus.getHeight());
-
-			finishBox = new Rectangle(finishX, finishY, 30, 30);
 
 		} catch (Exception e) {
 
@@ -131,6 +121,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			player.y = player.y + gravity;
 		}
 
+		if (cactusManager.intersects(player)) {
+			System.out.println("CACTUS");
+			currentState = END_STATE;
+		}
+
+		if (player.cactusBox.intersects(finish.cactusBox)) {
+
+			currentState = WIN_STATE;
+		}
+
 	}
 
 	void updateEndState() {
@@ -163,14 +163,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawImage(backgroundImage, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
 		// background
 
-		// g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width,
-		// cactusBox.height);// draws the outline of the cactus image
 		player.draw(g);// white dot
 		g.drawRect(finish.x, finish.y, finish.width, finish.height);
 		finish.draw(g);// red dot
 		/// g.drawImage(cactus, frameX, frameY, null, null);
 
-		gameManager.draw(g);
+		cactusManager.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
@@ -203,17 +201,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		} else if (currentState == END_STATE) {
 			updateEndState();
 
-		}
-		/*
-		 * if (player.box.intersects(cactusBox)) { System.out.println("CACTUS");
-		 * 
-		 * currentState = END_STATE;
-		 * 
-		 * }
-		 */
-		if (player.cactusBox.intersects(finishBox)) {
-
-			currentState = WIN_STATE;
 		}
 
 		repaint();
