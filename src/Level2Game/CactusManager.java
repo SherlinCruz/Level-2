@@ -14,6 +14,8 @@ public class CactusManager {
 	// score will be coded here?
 	ArrayList<Item> items = new ArrayList<Item>();
 
+	boolean up = true;
+
 	CactusManager() {
 
 		Item cactusItem;
@@ -78,6 +80,28 @@ public class CactusManager {
 	}
 
 	public void update() {
+		if (up) {
+			for (Item cactus : items) {
+
+				cactus.y -= 5;
+
+				cactus.updateCactusBox();
+			}
+
+			up = false;
+		} else {
+
+			for (Item cactus : items) {
+
+				cactus.y += 5;
+				
+				
+				cactus.updateCactusBox();
+
+			}
+
+			up = true;
+		}
 
 	}
 

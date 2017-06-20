@@ -14,6 +14,7 @@ import java.awt.image.ImageObserver;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -50,6 +51,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font Endtitle;
 	CactusManager cactusManager = new CactusManager();
 
+	JLabel timeLabel = new JLabel();
+	int timeLimit = 20000;
 	Timer timer;
 
 	GamePanel() {
@@ -74,6 +77,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		}
 		timer.start();
+	}
+
+	void startEndGameTimer(long delay) {
+		new java.util.Timer().schedule(new java.util.TimerTask() {
+			@Override
+			public void run() {
+				System.out.println("Yo");
+			}
+		}, delay * 1000);
 	}
 
 	public void paintComponent(Graphics g) {
@@ -114,8 +126,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 
+		timeLimit -= 1000 / 6;
+		if (timeLimit <= 0) {
+
+			currentState = END_STATE;
+			System.out.println("time");
+
+		}
+
 		player.update();
 		finish.update();
+		cactusManager.update();
 		if (player.y + gravity <= frameY - player.height) {
 			System.out.println("gravity works");
 			player.y = player.y + gravity;
@@ -162,13 +183,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g) {
 		g.drawImage(backgroundImage, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
 		// background
-
 		player.draw(g);// white dot
 		g.drawRect(finish.x, finish.y, finish.width, finish.height);
 		finish.draw(g);// red dot
-		/// g.drawImage(cactus, frameX, frameY, null, null);
 
 		cactusManager.draw(g);
+
+		g.setFont(enterFont);
+		g.setColor(Color.black);
+		g.drawString("Time Left: " + timeLimit / 1000, EndlessJump.width - 200, 50);
+
+		/*
+		 * timeLabel.setBounds(EndlessJump.width, 50, 200, 50);
+		 * 
+		 * add(timeLabel);
+		 */
 	}
 
 	void drawEndState(Graphics g) {

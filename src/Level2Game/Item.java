@@ -40,7 +40,7 @@ public class Item {
 
 	}
 
-	Item(int itemWidth, int itemHeight, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {
+	Item(int itemWidth, int itemHeight, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {// player&end
 
 		this.width = itemWidth;
 		this.height = itemHeight;
@@ -103,10 +103,14 @@ public class Item {
 		x = x + speedx;
 		// allows the player to move from one side to the other side.
 
-		// y = y + speedy;
-		cactusBox.setBounds(x, y, width, height);
+		// y += 1;
+		updateCactusBox();
 		boundaryCheck();
 
+	}
+
+	void updateCactusBox() {
+		cactusBox.setBounds(x, y, width, height);
 	}
 
 	public int getWidth(Object object) {
