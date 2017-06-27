@@ -31,14 +31,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	int frameY = EndlessJump.height;
 	int frameX = EndlessJump.width;
-	int playerWidth = 30;
-	int playerHeight = 30;
+	int playerWidth = 20;
+	int playerHeight = 20;
 	int finishX = frameX - playerWidth;
 	int finishY = frameY - playerHeight;
 	int gravity = 5;
 	int srcx1 = 0;
 	int srcx2 = 0;
 	int imageWidth = 0;
+	
+	
 	int scrollSpeed = 8;
 	int currentState = MENU_STATE;
 	boolean Upwards;
@@ -52,7 +54,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	CactusManager cactusManager = new CactusManager();
 
 	JLabel timeLabel = new JLabel();
-	int timeLimit = 20000;
+	int timeLimit = 35000;
 	Timer timer;
 
 	GamePanel() {
@@ -135,12 +137,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 
 		player.update();
+
+		if (player.timeGiven) {
+
+			timeLimit += 35000;
+
+			player.timeGiven = false;
+
+		}
+
 		finish.update();
 		cactusManager.update();
 		if (player.y + gravity <= frameY - player.height) {
 			System.out.println("gravity works");
 			player.y = player.y + gravity;
-		}
+		} // drags the player down
 
 		if (cactusManager.intersects(player)) {
 			System.out.println("CACTUS");
@@ -248,13 +259,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		}
 		// NEED TO FIX
-		if (player.y > 355) {
+		if (player.y > 0) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				System.out.println("UP");
 				player.y = player.y - player.speedy;
 				Upwards = true;
 
-			}
+			} // focus on the amount of height the player is able to go up
 		}
 
 	}

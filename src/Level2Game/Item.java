@@ -9,6 +9,8 @@ import java.util.Random;
 public class Item {
 
 	BufferedImage i;
+	boolean timeGiven = false;
+
 	boolean empty;
 	boolean alive;
 	int width;
@@ -73,28 +75,26 @@ public class Item {
 			g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
 
 			// outline
-
 		}
 
 	}
 
 	void boundaryCheck() {
-		if (x < 0) {
-			speedx = -speedx;
-			System.out.println("x > 0");
-		}
-		if (x > EndlessJump.width) {
+
+		/*
+		 * if (x < 0) { speedx = -speedx; System.out.println("x > 0"); }
+		 */
+		if (x > EndlessJump.width - this.width) {
 			speedx = -speedx;
 			System.out.println("x < 500");
-		}
-		if (y < 0) {
-			speedy = -speedy;
-			System.out.println("y < 0");
-		}
-		if (y > EndlessJump.height - height) {
-			speedy = -speedy;
-			System.out.println("y > 500");
-		}
+
+			timeGiven = true;
+
+		} /*
+			 * if (y < 0) { speedy = -speedy; System.out.println("y < 0"); } if
+			 * (y > EndlessJump.height - height) { speedy = -speedy;
+			 * System.out.println("y > 500"); }
+			 */
 
 	}
 

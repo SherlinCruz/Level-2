@@ -13,6 +13,8 @@ public class CactusManager {
 
 	// score will be coded here?
 	ArrayList<Item> items = new ArrayList<Item>();
+	
+	
 
 	boolean up = true;
 
@@ -60,6 +62,42 @@ public class CactusManager {
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
 
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+			
+			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
+			items.add(cactusItem);
+
 		} catch (Exception e) {
 
 			System.err.println("Couldn't find this image: " + items);
@@ -80,6 +118,9 @@ public class CactusManager {
 	}
 
 	public void update() {
+		
+		
+		
 		if (up) {
 			for (Item cactus : items) {
 
@@ -112,6 +153,8 @@ public class CactusManager {
 			cactus.draw(g);
 
 		}
+		
+		
 
 	}
 
