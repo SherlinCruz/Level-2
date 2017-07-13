@@ -19,7 +19,6 @@ public class EndlessJump implements KeyListener {
 	public static void main(String[] args) {
 
 		EndlessJump EndlessJump = new EndlessJump();
-		
 
 	}
 
@@ -28,7 +27,7 @@ public class EndlessJump implements KeyListener {
 		frame = new JFrame();
 		gamepanel = new GamePanel();
 		frame.addKeyListener(gamepanel);
-		frame.setTitle("EndlessJump");		
+		frame.setTitle("EndlessJump");
 		setup();
 
 	}
@@ -38,28 +37,24 @@ public class EndlessJump implements KeyListener {
 		frame.add(gamepanel);
 		frame.setVisible(true);
 		frame.setSize(width, height);
-
-		// gamepanel.addKeyListener(this);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+		// gamepanel.addKeyListener(this);
 
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 }

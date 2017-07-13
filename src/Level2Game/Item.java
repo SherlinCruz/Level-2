@@ -10,7 +10,6 @@ public class Item {
 
 	BufferedImage i;
 	boolean timeGiven = false;
-
 	boolean empty;
 	boolean alive;
 	int width;
@@ -27,11 +26,12 @@ public class Item {
 		Random randomNumber = new Random();
 
 		int randomValue1 = randomNumber.nextInt(500);
-
 		this.width = i.getWidth();
 		this.height = i.getHeight();
-		this.x = randomNumber.nextInt(gameWidth);
-		this.y = randomNumber.nextInt(gameHeight);
+		this.x = randomNumber.nextInt(gameWidth - 100);
+		this.y = randomNumber.nextInt(gameHeight - 100);
+		// 100 is subtracted from the randm value so that it draws within a smaller range in order for the cactus to be
+		// draw near the player
 		this.speedx = speedx;
 		this.speedy = speedy;
 		this.color = color;
@@ -42,7 +42,7 @@ public class Item {
 
 	}
 
-	Item(int itemWidth, int itemHeight, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {// player&end
+	Item(int itemWidth, int itemHeight, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {// player&f
 
 		this.width = itemWidth;
 		this.height = itemHeight;
@@ -80,24 +80,28 @@ public class Item {
 	}
 
 	void boundaryCheck() {
-
-		/*
-		 * if (x < 0) { speedx = -speedx; System.out.println("x > 0"); }
-		 */
 		if (x > EndlessJump.width - this.width) {
 			speedx = -speedx;
 			System.out.println("x < 500");
 
 			timeGiven = true;
 
-		} /*
-			 * if (y < 0) { speedy = -speedy; System.out.println("y < 0"); } if
-			 * (y > EndlessJump.height - height) { speedy = -speedy;
-			 * System.out.println("y > 500"); }
-			 */
+			// add time to the game if the player has not reached the finish box..right
+
+		}
+		if (x < 0) {
+			speedx = -speedx;
+			System.out.println("x < 500");
+
+			timeGiven = true;
+
+			// add time to the game if the player has not reached the finish box..left
+
+		}
 
 	}
 
+	// 470
 	void update() {
 
 		x = x + speedx;

@@ -13,8 +13,6 @@ public class CactusManager {
 
 	// score will be coded here?
 	ArrayList<Item> items = new ArrayList<Item>();
-	
-	
 
 	boolean up = true;
 
@@ -70,31 +68,31 @@ public class CactusManager {
 
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
-			
+
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
 
@@ -118,9 +116,7 @@ public class CactusManager {
 	}
 
 	public void update() {
-		
-		
-		
+
 		if (up) {
 			for (Item cactus : items) {
 
@@ -135,8 +131,7 @@ public class CactusManager {
 			for (Item cactus : items) {
 
 				cactus.y += 5;
-				
-				
+
 				cactus.updateCactusBox();
 
 			}
@@ -153,8 +148,6 @@ public class CactusManager {
 			cactus.draw(g);
 
 		}
-		
-		
 
 	}
 
