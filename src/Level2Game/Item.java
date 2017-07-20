@@ -21,15 +21,15 @@ public class Item {
 	Color color;
 	Rectangle cactusBox;
 
-	Item(int gameWidth, int gameHeight, int speedx, int speedy, Color color, BufferedImage i) {
+	Item(int gameWidth, int gameHeight, int speedx, int speedy, Color color, BufferedImage i) {//cactus
 
 		Random randomNumber = new Random();
 
 		int randomValue1 = randomNumber.nextInt(500);
 		this.width = i.getWidth();
 		this.height = i.getHeight();
-		this.x = randomNumber.nextInt(gameWidth - 100);
-		this.y = randomNumber.nextInt(gameHeight - 100);
+		this.x = randomNumber.nextInt(gameWidth - 80);
+		this.y = randomNumber.nextInt(gameHeight - 80);
 		// 100 is subtracted from the randm value so that it draws within a smaller range in order for the cactus to be
 		// draw near the player
 		this.speedx = speedx;
@@ -42,7 +42,7 @@ public class Item {
 
 	}
 
-	Item(int itemWidth, int itemHeight, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {// player&f
+	Item(int itemWidth, int itemHeight, int x, int y, int speedx, int speedy, Color color, BufferedImage i) {// player&finish
 
 		this.width = itemWidth;
 		this.height = itemHeight;
@@ -101,7 +101,6 @@ public class Item {
 
 	}
 
-	// 470
 	void update() {
 
 		x = x + speedx;

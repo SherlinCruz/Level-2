@@ -15,6 +15,7 @@ public class CactusManager {
 	ArrayList<Item> items = new ArrayList<Item>();
 
 	boolean up = true;
+	boolean overlap = false;
 
 	CactusManager() {
 
@@ -23,54 +24,6 @@ public class CactusManager {
 		try {
 
 			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus.png"));
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
-
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
 
 			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
 			items.add(cactusItem);
@@ -111,6 +64,16 @@ public class CactusManager {
 				return true;
 			}
 		}
+
+		for (Item cactusItem : items) {
+			if (cactusItem.cactusBox.intersects(cactusItem.cactusBox)) {
+
+				System.out.println("OVERLAPING");
+				return true;
+
+			}
+		}
+
 		return false;
 
 	}
@@ -137,6 +100,12 @@ public class CactusManager {
 			}
 
 			up = true;
+		}
+		// ***************************
+		if (overlap) {
+			System.out.println("bump");
+
+			overlap = true;
 		}
 
 	}

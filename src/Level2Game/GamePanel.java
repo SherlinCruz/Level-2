@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -23,17 +24,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	BufferedImage backgroundImage;
 	Rectangle finishBox;
 	Timer timer;
+	Item item;
 
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	final int WIN_STATE = 3;
+	Random randomNumber = new Random();
 	int frameY = EndlessJump.height;
 	int frameX = EndlessJump.width;
 	int playerWidth = 25;
 	int playerHeight = 25;
-	int finishX = 655;
-	int finishY = 505;
+	int finishX = randomNumber.nextInt(675);
+	// 655
+	int finishY = randomNumber.nextInt(525);
+	// 505
 	int gravity = 3;
 	int srcx1 = 0;
 	int srcx2 = 0;
@@ -56,6 +61,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		timer = new Timer(1000 / 6, this);
 		player = new Item(playerWidth, playerHeight, 45, 505, 5, 30, Color.white, null);
+		// speedx needs to change if finish is on the left side of screen
 		finish = new Item(playerWidth, playerHeight, finishX, finishY, 0, 0, Color.red, null);
 		titleFont = new Font("time new roman", Font.PLAIN, 60);
 		enterFont = new Font("time new roman", Font.PLAIN, 30);
@@ -179,16 +185,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.yellow);
 
 		g.setFont(titleFont);
-		g.setColor(Color.pink);
-		g.drawString("EndlessJump", 200, 400);
+		g.setColor(Color.black);
+		g.drawString("EndlessJump", 150, 160);
 
 		g.setFont(enterFont);
 		g.setColor(Color.black);
-		g.drawString("Press ENTER to start ", 180, 300);
+		g.drawString("Press ENTER to start ", 160, 210);
 
 		g.setFont(spaceFont);
 		g.setColor(Color.black);
-		g.drawString("Press SPACE for intructions", 180, 340);
+		g.drawString("Press SPACE for intructions", 160, 250);
 
 	}
 
@@ -211,7 +217,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.setColor(Color.BLACK);
 		g.setFont(titleFont);
-		g.drawString("END GAME", 250, 240);
+		g.drawString("END GAME", 160, 240);
 
 	}
 
@@ -260,8 +266,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				System.out.println("UP");
 				player.y = player.y - player.speedy;
 				Upwards = true;
-// focus on the amount of height the player is able to go up
-			} 
+				// focus on the amount of height the player is able to go up
+			}
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+			// g.drawString("Intructions: ", 180, 200);
+			// need to include a instrustion state!
+			player.speedx = 8;
+
 		}
 
 	}
