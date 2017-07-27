@@ -30,6 +30,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME_STATE = 1;
 	final int END_STATE = 2;
 	final int WIN_STATE = 3;
+	final int INSTRUCTIONS_STATE = 4;
 	Random randomNumber = new Random();
 	int frameY = EndlessJump.height;
 	int frameX = EndlessJump.width;
@@ -55,14 +56,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font Endtitle;
 
 	CactusManager cactusManager = new CactusManager();
+
 	JLabel timeLabel = new JLabel();
 
 	GamePanel() {
 
 		timer = new Timer(1000 / 6, this);
 		player = new Item(playerWidth, playerHeight, 45, 505, 5, 30, Color.white, null);
+		// *playercolor = finish outline color
 		// speedx needs to change if finish is on the left side of screen
-		finish = new Item(playerWidth, playerHeight, finishX, finishY, 0, 0, Color.red, null);
+		finish = new Item(playerWidth, playerHeight, finishX, finishY, 0, 0, Color.pink, null);
+		// *finishcolor = cactusOutlineColors
 		titleFont = new Font("time new roman", Font.PLAIN, 60);
 		enterFont = new Font("time new roman", Font.PLAIN, 30);
 		spaceFont = new Font("time new roman", Font.PLAIN, 30);
@@ -94,6 +98,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void paintComponent(Graphics g) {
 		if (currentState == MENU_STATE) {
 			drawMenuState(g);
+
+		}
+		if (currentState == INSTRUCTIONS_STATE) {
+			drawInstructionsState(g);
 		} else if (currentState == GAME_STATE) {
 			drawGameState(g);
 		} else if (currentState == END_STATE) {
@@ -118,7 +126,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 			srcx2 += scrollSpeed;
 
-			System.out.println("scroll");
 		}
 
 	}
@@ -133,7 +140,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (timeLimit <= 0) {
 
 			currentState = END_STATE;
-			System.out.println("time");
 
 		}
 
@@ -160,11 +166,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 
-		if (cactusManager.intersects(player)) {
-			System.out.println("CACTUS");
-			currentState = END_STATE;
-		}
-
 		if (player.cactusBox.intersects(finish.cactusBox)) {
 
 			currentState = WIN_STATE;
@@ -177,6 +178,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateWinState() {
+
+	}
+
+	void upddateInstructionState() {
 
 	}
 
@@ -195,6 +200,24 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(spaceFont);
 		g.setColor(Color.black);
 		g.drawString("Press SPACE for intructions", 160, 250);
+
+	}
+
+	void drawInstructionsState(Graphics g) {
+
+		System.out.println("testing state");
+
+		g.setColor(Color.blue);
+
+		g.setFont(titleFont);
+		g.setColor(Color.black);
+		g.drawString("Instructions", 150, 160);
+
+		g.setFont(spaceFont);
+		g.setColor(Color.black);
+		g.drawString(" Get to the finish without touching a cacctus....", 160, 210);
+		g.drawString("Player will move from right once the player touched the left side of the wall. ", 160, 210);
+		g.drawString("etc.. ", 160, 210);
 
 	}
 
@@ -251,15 +274,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 
-		System.out.println("Console");
-
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == MENU_STATE) {
+
 				currentState = GAME_STATE;
 
 			}
 
 		}
+
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+			currentState = INSTRUCTIONS_STATE;
+			System.out.println("Console");
+
+		}
+
 		// FIXED Maybe...
 		if (player.y > 0) {
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -272,8 +302,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 
-			// g.drawString("Intructions: ", 180, 200);
-			// need to include a instrustion state!
 			player.speedx = 8;
 
 		}

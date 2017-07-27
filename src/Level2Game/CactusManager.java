@@ -3,6 +3,7 @@ package Level2Game;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,6 @@ public class CactusManager {
 	ArrayList<Item> items = new ArrayList<Item>();
 
 	boolean up = true;
-	boolean overlap = false;
 
 	CactusManager() {
 
@@ -25,35 +25,46 @@ public class CactusManager {
 
 			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus.png"));
 
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
+			for (int i = 0; i < 20; i++) {
 
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
+				int x = new Random().nextInt(EndlessJump.width - 80);
 
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
+				int y = new Random().nextInt(EndlessJump.height - 80);
 
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
+				while (!checkCactus(x, y)) {
 
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
+					x = new Random().nextInt(EndlessJump.width - 80);
 
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
+					y = new Random().nextInt(EndlessJump.height - 80);
+				}
 
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
+				cactusItem = new Item(x, y, 0, 0, Color.white, cactus);
+				items.add(cactusItem);
 
-			cactusItem = new Item(EndlessJump.width, EndlessJump.height, 0, 0, Color.white, cactus);
-			items.add(cactusItem);
+			}
+		} catch (
 
-		} catch (Exception e) {
+		Exception e) {
 
 			System.err.println("Couldn't find this image: " + items);
 
 		}
+
+	}
+
+	boolean checkCactus(int x, int y) {
+
+		Rectangle r = new Rectangle(x, y, 35, 35);
+
+		for (Item i : items) {
+			if (r.intersects(i.cactusBox)) {
+				{
+					return false;
+				}
+
+			}
+		}
+		return true;
 
 	}
 
@@ -62,15 +73,6 @@ public class CactusManager {
 		for (Item cactus : items) {
 			if (player.cactusBox.intersects(cactus.cactusBox)) {
 				return true;
-			}
-		}
-
-		for (Item cactusItem : items) {
-			if (cactusItem.cactusBox.intersects(cactusItem.cactusBox)) {
-
-				System.out.println("OVERLAPING");
-				return true;
-
 			}
 		}
 
@@ -100,12 +102,6 @@ public class CactusManager {
 			}
 
 			up = true;
-		}
-		// ***************************
-		if (overlap) {
-			System.out.println("bump");
-
-			overlap = true;
 		}
 
 	}

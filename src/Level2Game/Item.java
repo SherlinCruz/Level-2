@@ -21,15 +21,15 @@ public class Item {
 	Color color;
 	Rectangle cactusBox;
 
-	Item(int gameWidth, int gameHeight, int speedx, int speedy, Color color, BufferedImage i) {//cactus
+	Item(int x, int y, int speedx, int speedy, Color color, BufferedImage i) {// cactus
 
 		Random randomNumber = new Random();
 
 		int randomValue1 = randomNumber.nextInt(500);
 		this.width = i.getWidth();
 		this.height = i.getHeight();
-		this.x = randomNumber.nextInt(gameWidth - 80);
-		this.y = randomNumber.nextInt(gameHeight - 80);
+		this.x = x;
+		this.y = y;
 		// 100 is subtracted from the randm value so that it draws within a smaller range in order for the cactus to be
 		// draw near the player
 		this.speedx = speedx;
@@ -38,6 +38,7 @@ public class Item {
 		this.alive = true;
 		this.empty = true;
 		this.i = i;
+
 		cactusBox = new Rectangle(x, y, width, height);
 
 	}
@@ -74,7 +75,7 @@ public class Item {
 
 			g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
 
-			// outline
+			
 		}
 
 	}
