@@ -12,7 +12,6 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.JLabel;
@@ -34,12 +33,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Random randomNumber = new Random();
 	int frameY = EndlessJump.height;
 	int frameX = EndlessJump.width;
-	int playerWidth = 25;
-	int playerHeight = 25;
+	int playerWidth = 23;
+	int playerHeight = 23;
 	int finishX = randomNumber.nextInt(675);
-	// 655
 	int finishY = randomNumber.nextInt(525);
-	// 505
 	int gravity = 3;
 	int srcx1 = 0;
 	int srcx2 = 0;
@@ -62,10 +59,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	GamePanel() {
 
 		timer = new Timer(1000 / 6, this);
-		player = new Item(playerWidth, playerHeight, 45, 505, 5, 30, Color.white, null);
+		player = new Item(playerWidth, playerHeight, 22, 450, 5, 30, Color.white, null);
 		// *playercolor = finish outline color
 		// speedx needs to change if finish is on the left side of screen
-		finish = new Item(playerWidth, playerHeight, finishX, finishY, 0, 0, Color.pink, null);
+
+		while (!cactusManager.checkCactus(finishX, finishY)) {
+			finishX = randomNumber.nextInt(675);
+			finishY = randomNumber.nextInt(525);
+
+		}
+		finish = new Item(playerWidth, playerHeight, finishX, finishY + 50, 0, 0, Color.pink, null);
 		// *finishcolor = cactusOutlineColors
 		titleFont = new Font("time new roman", Font.PLAIN, 60);
 		enterFont = new Font("time new roman", Font.PLAIN, 30);
@@ -98,7 +101,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void paintComponent(Graphics g) {
 		if (currentState == MENU_STATE) {
 			drawMenuState(g);
-
 		}
 		if (currentState == INSTRUCTIONS_STATE) {
 			drawInstructionsState(g);
@@ -156,14 +158,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		finish.update();
 		cactusManager.update();
 		if (player.y <= frameY - player.height) {
-			System.out.println("gravity works");
-			player.y = player.y + gravity;
 			// drags the player down
-			System.out.println("first" + player.y);
+			player.y = player.y + gravity;
+
 			if (player.y > 506) {
+
 				player.y = 506;
-				System.out.println("second" + player.y);
+
 			}
+		}
+
+		if (cactusManager.intersects(player)) {
+
+			currentState = END_STATE;
+
 		}
 
 		if (player.cactusBox.intersects(finish.cactusBox)) {
@@ -187,8 +195,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void drawMenuState(Graphics g) {
 
-		g.setColor(Color.yellow);
-
 		g.setFont(titleFont);
 		g.setColor(Color.black);
 		g.drawString("EndlessJump", 150, 160);
@@ -205,28 +211,24 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void drawInstructionsState(Graphics g) {
 
-		System.out.println("testing state");
-
-		g.setColor(Color.blue);
-
+		g.setColor(Color.black);
 		g.setFont(titleFont);
-		g.setColor(Color.black);
-		g.drawString("Instructions", 150, 160);
-
+		g.drawString("Instructions ", 130, 160);
 		g.setFont(spaceFont);
-		g.setColor(Color.black);
-		g.drawString(" Get to the finish without touching a cacctus....", 160, 210);
-		g.drawString("Player will move from right once the player touched the left side of the wall. ", 160, 210);
-		g.drawString("etc.. ", 160, 210);
+		g.drawString("Get to the finish without touching a cacctus ", 140, 210);
+		g.drawString("Player will move from right once the player touched the left side of the wall. ", 140, 250);
 
 	}
 
 	void drawGameState(Graphics g) {
+
 		g.drawImage(backgroundImage, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
-		// background
-		player.draw(g);// white dot
-		g.drawRect(finish.x, finish.y, finish.width, finish.height);
-		finish.draw(g);// red dot
+
+		//// g.drawRect(finish.x, finish.y, finish.width, finish.height);
+
+		finish.draw(g);
+
+		player.draw(g);
 
 		cactusManager.draw(g);
 
@@ -265,7 +267,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		} else if (currentState == END_STATE) {
 			updateEndState();
-
 		}
 
 		repaint();
@@ -280,13 +281,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				currentState = GAME_STATE;
 
 			}
-
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 
 			currentState = INSTRUCTIONS_STATE;
-			System.out.println("Console");
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+			currentState = GAME_STATE;
+
+			if (currentState == GAME_STATE) {
+
+				System.out.println("done ");
+
+			}
 
 		}
 

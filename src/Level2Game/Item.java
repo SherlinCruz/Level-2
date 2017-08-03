@@ -29,7 +29,7 @@ public class Item {
 		this.width = i.getWidth();
 		this.height = i.getHeight();
 		this.x = x;
-		this.y = y;
+		this.y = y + 50;
 		// 100 is subtracted from the randm value so that it draws within a smaller range in order for the cactus to be
 		// draw near the player
 		this.speedx = speedx;
@@ -48,7 +48,7 @@ public class Item {
 		this.width = itemWidth;
 		this.height = itemHeight;
 		this.x = x;
-		this.y = y;
+		this.y = y + 50;
 		this.speedx = speedx;
 		this.speedy = speedy;
 		this.color = color;
@@ -56,6 +56,7 @@ public class Item {
 		this.empty = true;
 		this.i = i;
 		cactusBox = new Rectangle(x, y, itemWidth, itemHeight);
+
 	}
 
 	boolean isAlive() {
@@ -73,9 +74,8 @@ public class Item {
 		} else {
 			g.drawImage(i, x, y, i.getWidth(), i.getHeight(), null);
 
-			g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
+			// g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
 
-			
 		}
 
 	}
