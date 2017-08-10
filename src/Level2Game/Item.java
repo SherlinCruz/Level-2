@@ -30,7 +30,8 @@ public class Item {
 		this.height = i.getHeight();
 		this.x = x;
 		this.y = y + 50;
-		// 100 is subtracted from the randm value so that it draws within a smaller range in order for the cactus to be
+		// 100 is subtracted from the randm value so that it draws within a
+		// smaller range in order for the cactus to be
 		// draw near the player
 		this.speedx = speedx;
 		this.speedy = speedy;
@@ -74,7 +75,8 @@ public class Item {
 		} else {
 			g.drawImage(i, x, y, i.getWidth(), i.getHeight(), null);
 
-			// g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
+			// g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width,
+			// cactusBox.height);
 
 		}
 
@@ -87,7 +89,8 @@ public class Item {
 
 			timeGiven = true;
 
-			// add time to the game if the player has not reached the finish box..right
+			// add time to the game if the player has not reached the finish
+			// box..right
 
 		}
 		if (x < 0) {
@@ -96,7 +99,8 @@ public class Item {
 
 			timeGiven = true;
 
-			// add time to the game if the player has not reached the finish box..left
+			// add time to the game if the player has not reached the finish
+			// box..left
 
 		}
 

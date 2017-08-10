@@ -59,21 +59,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	GamePanel() {
 
 		timer = new Timer(1000 / 6, this);
-		player = new Item(playerWidth, playerHeight, 22, 450, 5, 30, Color.white, null);
-		// *playercolor = finish outline color
-		// speedx needs to change if finish is on the left side of screen
+		player = new Item(playerWidth, playerHeight, 22, 450, 5, 25, Color.white, null);
 
 		while (!cactusManager.checkCactus(finishX, finishY)) {
 			finishX = randomNumber.nextInt(675);
-			finishY = randomNumber.nextInt(525);
+			finishY = randomNumber.nextInt(374);
 
 		}
+
 		finish = new Item(playerWidth, playerHeight, finishX, finishY + 50, 0, 0, Color.pink, null);
-		// *finishcolor = cactusOutlineColors
+		System.out.println("finishY two " + finishY);
 		titleFont = new Font("time new roman", Font.PLAIN, 60);
-		enterFont = new Font("time new roman", Font.PLAIN, 30);
-		spaceFont = new Font("time new roman", Font.PLAIN, 30);
-		Endtitle = new Font("time new roman", Font.PLAIN, 30);
+		enterFont = new Font("time new roman", Font.PLAIN, 20);
+		spaceFont = new Font("time new roman", Font.PLAIN, 20);
+		Endtitle = new Font("time new roman", Font.PLAIN, 20);
 
 		try {
 
@@ -86,6 +85,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			System.err.println("Couldn't find this image: " + backgroundImage);
 
 		}
+
+		while (finish.cactusBox.intersects(player.cactusBox)) {
+			finishX = randomNumber.nextInt(675);
+			finishY = randomNumber.nextInt(374);
+
+		}
+
 		timer.start();
 	}
 
@@ -177,6 +183,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (player.cactusBox.intersects(finish.cactusBox)) {
 
 			currentState = WIN_STATE;
+
 		}
 
 	}
@@ -215,8 +222,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(titleFont);
 		g.drawString("Instructions ", 130, 160);
 		g.setFont(spaceFont);
-		g.drawString("Get to the finish without touching a cacctus ", 140, 210);
-		g.drawString("Player will move from right once the player touched the left side of the wall. ", 140, 250);
+		g.drawString("Get the player(white dot) to the finish ", 120, 210);
+		g.drawString("(pink dot) without coming near a cactus.", 130, 240);
+		g.drawString("The player will move right until it reaches ", 120, 270);
+		g.drawString("the end of the right screen it will then move ", 130, 300);
+		g.drawString("left until it reaches the end of the left wall. ", 120, 330);
+		g.drawString("Figure out a way to get to the finish line before the ", 130, 360);
+		g.drawString("time is up. Time will be added when player reaches either  ", 120, 390);
+		g.drawString("side of the wall without yet getting to the finish.", 130, 420);
 
 	}
 

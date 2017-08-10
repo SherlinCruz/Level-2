@@ -54,7 +54,7 @@ public class CactusManager {
 
 	boolean checkCactus(int x, int y) {
 
-		Rectangle r = new Rectangle(x, y, 35, 35);
+		Rectangle r = new Rectangle(x, y, 35, 32);
 
 		for (Item i : items) {
 			if (r.intersects(i.cactusBox)) {
