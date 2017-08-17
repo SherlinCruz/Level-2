@@ -95,7 +95,7 @@ public class Item {
 		}
 		if (x < 0) {
 			speedx = -speedx;
-			System.out.println("x < 500");
+			System.out.println("x > 500");
 
 			timeGiven = true;
 

@@ -35,8 +35,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int frameX = EndlessJump.width;
 	int playerWidth = 23;
 	int playerHeight = 23;
-	int finishX = randomNumber.nextInt(675);
-	int finishY = randomNumber.nextInt(525);
+	int finishX = randomNumber.nextInt(600);
+	// 675
+	int finishY = randomNumber.nextInt(500);
+	// 525
 	int gravity = 3;
 	int srcx1 = 0;
 	int srcx2 = 0;
@@ -46,7 +48,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int timeLimit = 35000;
 	boolean Upwards;
 	Item player;
-	Item finish;
+	static Item finish;
 	Font titleFont;
 	Font enterFont;
 	Font spaceFont;
@@ -60,15 +62,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		timer = new Timer(1000 / 6, this);
 		player = new Item(playerWidth, playerHeight, 22, 450, 5, 25, Color.white, null);
-
-		while (!cactusManager.checkCactus(finishX, finishY)) {
+		finish = new Item(playerWidth, playerHeight, finishX, finishY + 50, 0, 0, Color.pink, null);
+		while (cactusManager.checkCactus(finishX, finishY)) {
 			finishX = randomNumber.nextInt(675);
 			finishY = randomNumber.nextInt(374);
 
 		}
 
-		finish = new Item(playerWidth, playerHeight, finishX, finishY + 50, 0, 0, Color.pink, null);
-		System.out.println("finishY two " + finishY);
 		titleFont = new Font("time new roman", Font.PLAIN, 60);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
@@ -147,6 +147,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		timeLimit -= 1000 / 6;
 		if (timeLimit <= 0) {
 
+			System.out.println("time out");
 			currentState = END_STATE;
 
 		}
@@ -178,6 +179,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 			currentState = END_STATE;
 
+			System.out.println("intersect");
 		}
 
 		if (player.cactusBox.intersects(finish.cactusBox)) {
@@ -321,12 +323,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				Upwards = true;
 				// focus on the amount of height the player is able to go up
 			}
-		}
-
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-
-			player.speedx = 8;
-
 		}
 
 	}

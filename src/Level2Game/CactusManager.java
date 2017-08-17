@@ -1,3 +1,4 @@
+
 package Level2Game;
 
 import java.awt.Color;
@@ -25,9 +26,10 @@ public class CactusManager {
 
 			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus.png"));
 
-			for (int i = 0; i < 30; i++) {
+			for (int i = 0; i < 20; i++) {
 
 				int x = new Random().nextInt(EndlessJump.width - 80);
+				System.out.println("" + x);
 
 				int y = new Random().nextInt(EndlessJump.height - 80);
 
@@ -38,7 +40,8 @@ public class CactusManager {
 					y = new Random().nextInt(EndlessJump.height - 80);
 				}
 
-				cactusItem = new Item(x, y, 0, 0, null, cactus);
+				cactusItem = new Item(x - 10, y, 0, 0, null, cactus);
+
 				items.add(cactusItem);
 
 			}
@@ -55,17 +58,22 @@ public class CactusManager {
 	boolean checkCactus(int x, int y) {
 
 		Rectangle r = new Rectangle(x, y, 35, 32);
+		Rectangle playerBox = new Rectangle(22, 450, 23, 23);
 
 		for (Item i : items) {
 			if (r.intersects(i.cactusBox)) {
-				{
-					return false;
-				}
-
+				return false;
+			} else if (playerBox.intersects(i.cactusBox)) {
+				return false;
 			}
+			// if gap between is too small
+			else if ((Math.abs(x - i.x) < 100) && (Math.abs(y - i.y) < 100)) {
+
+				return false;
+			}
+
 		}
 		return true;
-
 	}
 
 	public boolean intersects(Item player) {
