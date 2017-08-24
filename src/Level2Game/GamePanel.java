@@ -62,11 +62,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		timer = new Timer(1000 / 6, this);
 		player = new Item(playerWidth, playerHeight, 22, 450, 5, 25, Color.white, null);
-		finish = new Item(playerWidth, playerHeight, finishX, finishY + 50, 0, 0, Color.pink, null);
-		while (cactusManager.checkCactus(finishX, finishY)) {
-			finishX = randomNumber.nextInt(675);
-			finishY = randomNumber.nextInt(374);
 
+		// +++++++
+		finish = new Item(playerWidth, playerHeight, finishX, finishY - 50, 0, 0, Color.pink, null);
+
+		// ++++++
+		while (cactusManager.checkCactus(finishX, finishY)) {
+			finishX = new Random().nextInt(675);
+			finishY = new Random().nextInt(374);
+			// finishX = randomNumber.nextInt(675);
+			// finishY = randomNumber.nextInt(374);
+
+		}
+
+		if (finishY < 80) {
+			finishY = new Random().nextInt(374);
+			System.out.println("finishY is less");
 		}
 
 		titleFont = new Font("time new roman", Font.PLAIN, 60);

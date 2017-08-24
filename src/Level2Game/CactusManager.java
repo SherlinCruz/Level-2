@@ -21,6 +21,7 @@ public class CactusManager {
 	CactusManager() {
 
 		Item cactusItem;
+		Item singleCactus;
 
 		try {
 
@@ -28,21 +29,24 @@ public class CactusManager {
 
 			for (int i = 0; i < 20; i++) {
 
-				int x = new Random().nextInt(EndlessJump.width - 80);
+				int x = new Random().nextInt(EndlessJump.width - 85);
 				System.out.println("" + x);
 
-				int y = new Random().nextInt(EndlessJump.height - 80);
+				int y = new Random().nextInt(EndlessJump.height - 100);
 
 				while (!checkCactus(x, y)) {
 
-					x = new Random().nextInt(EndlessJump.width - 80);
+					x = new Random().nextInt(EndlessJump.width - 85);
 
-					y = new Random().nextInt(EndlessJump.height - 80);
+					y = new Random().nextInt(EndlessJump.height - 100);
 				}
 
 				cactusItem = new Item(x - 10, y, 0, 0, null, cactus);
 
+				Item single = new Item(30, 500, 0, 0, null, cactus);
+
 				items.add(cactusItem);
+				items.add(single);
 
 			}
 		} catch (

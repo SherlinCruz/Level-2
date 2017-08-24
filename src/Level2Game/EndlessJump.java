@@ -33,12 +33,12 @@ public class EndlessJump implements KeyListener {
 	}
 
 	void setup() {
-
+		System.out.println("sherlin");
 		frame.add(gamepanel);
 		frame.setVisible(true);
 		frame.setSize(width, height);
 		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-		// gamepanel.addKeyListener(this);
+		gamepanel.addKeyListener(this);
 
 	}
 
