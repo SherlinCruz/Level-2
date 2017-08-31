@@ -1,4 +1,3 @@
-
 package Level2Game;
 
 import java.awt.Color;
@@ -21,32 +20,29 @@ public class CactusManager {
 	CactusManager() {
 
 		Item cactusItem;
-		Item singleCactus;
 
 		try {
 
 			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus.png"));
 
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 50; i++) {
 
-				int x = new Random().nextInt(EndlessJump.width - 85);
-				System.out.println("" + x);
+				int x = new Random().nextInt(EndlessJump.width - 80);
 
-				int y = new Random().nextInt(EndlessJump.height - 100);
+				int y = new Random().nextInt(EndlessJump.height - 120);
 
 				while (!checkCactus(x, y)) {
 
-					x = new Random().nextInt(EndlessJump.width - 85);
+					x++;
 
+					// y--;
 					y = new Random().nextInt(EndlessJump.height - 100);
 				}
 
-				cactusItem = new Item(x - 10, y, 0, 0, null, cactus);
-
-				Item single = new Item(30, 500, 0, 0, null, cactus);
+				// used to be -10!
+				cactusItem = new Item(x, y, 0, 0, null, cactus);
 
 				items.add(cactusItem);
-				items.add(single);
 
 			}
 		} catch (
@@ -62,7 +58,7 @@ public class CactusManager {
 	boolean checkCactus(int x, int y) {
 
 		Rectangle r = new Rectangle(x, y, 35, 32);
-		Rectangle playerBox = new Rectangle(22, 450, 23, 23);
+		Rectangle playerBox = new Rectangle(22, 450, 24, 24);
 
 		for (Item i : items) {
 			if (r.intersects(i.cactusBox)) {
@@ -71,7 +67,7 @@ public class CactusManager {
 				return false;
 			}
 			// if gap between is too small
-			else if ((Math.abs(x - i.x) < 100) && (Math.abs(y - i.y) < 100)) {
+			else if ((Math.abs(x - i.x) < 120) && (Math.abs(y - i.y) < 120)) {
 
 				return false;
 			}

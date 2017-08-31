@@ -32,7 +32,7 @@ public class Item {
 		this.y = y + 50;
 		// 100 is subtracted from the randm value so that it draws within a
 		// smaller range in order for the cactus to be
-		// draw near the player
+		// drawn near the player
 		this.speedx = speedx;
 		this.speedy = speedy;
 		this.color = color;
@@ -75,8 +75,7 @@ public class Item {
 		} else {
 			g.drawImage(i, x, y, i.getWidth(), i.getHeight(), null);
 
-			// g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width,
-			// cactusBox.height);
+			 g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
 
 		}
 

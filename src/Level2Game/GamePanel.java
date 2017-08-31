@@ -35,10 +35,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int frameX = EndlessJump.width;
 	int playerWidth = 23;
 	int playerHeight = 23;
-	int finishX = randomNumber.nextInt(600);
-	// 675
-	int finishY = randomNumber.nextInt(500);
-	// 525
+	// int finishX = randomNumber.nextInt(600);
+	int finishX = 800;
+	// int finishY = randomNumber.nextInt(300);
+	int finishY = 150;
+
 	int gravity = 3;
 	int srcx1 = 0;
 	int srcx2 = 0;
@@ -63,23 +64,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		timer = new Timer(1000 / 6, this);
 		player = new Item(playerWidth, playerHeight, 22, 450, 5, 25, Color.white, null);
 
-		// +++++++
-		finish = new Item(playerWidth, playerHeight, finishX, finishY - 50, 0, 0, Color.pink, null);
-
-		// ++++++
-		while (cactusManager.checkCactus(finishX, finishY)) {
+		if (cactusManager.checkCactus(finishX, finishY)) {
+			System.out.println("INTERSECTING");
 			finishX = new Random().nextInt(675);
-			finishY = new Random().nextInt(374);
-			// finishX = randomNumber.nextInt(675);
-			// finishY = randomNumber.nextInt(374);
+			finishY = new Random().nextInt(300);
 
 		}
 
-		if (finishY < 80) {
-			finishY = new Random().nextInt(374);
-			System.out.println("finishY is less");
-		}
-
+		finish = new Item(playerWidth, playerHeight, finishX, finishY, 0, 0, Color.pink, null);
 		titleFont = new Font("time new roman", Font.PLAIN, 60);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
@@ -249,8 +241,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g) {
 
 		g.drawImage(backgroundImage, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
-
-		//// g.drawRect(finish.x, finish.y, finish.width, finish.height);
 
 		finish.draw(g);
 
