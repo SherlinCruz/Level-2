@@ -75,7 +75,7 @@ public class Item {
 		} else {
 			g.drawImage(i, x, y, i.getWidth(), i.getHeight(), null);
 
-			 g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
+			// g.drawRect(cactusBox.x, cactusBox.y, cactusBox.width, cactusBox.height);
 
 		}
 

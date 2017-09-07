@@ -35,11 +35,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	int frameX = EndlessJump.width;
 	int playerWidth = 23;
 	int playerHeight = 23;
-	// int finishX = randomNumber.nextInt(600);
-	int finishX = 800;
-	// int finishY = randomNumber.nextInt(300);
-	int finishY = 150;
-
+	int finishX = randomNumber.nextInt(600);
+	// 675
+	int finishY = randomNumber.nextInt(500);
+	// 525
 	int gravity = 3;
 	int srcx1 = 0;
 	int srcx2 = 0;
@@ -64,14 +63,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		timer = new Timer(1000 / 6, this);
 		player = new Item(playerWidth, playerHeight, 22, 450, 5, 25, Color.white, null);
 
-		if (cactusManager.checkCactus(finishX, finishY)) {
-			System.out.println("INTERSECTING");
+		// +++++++
+		finish = new Item(playerWidth, playerHeight, finishX, finishY - 50, 0, 0, Color.pink, null);
+
+		// ++++++
+		while (!cactusManager.checkCactus(finishX, finishY)) {
 			finishX = new Random().nextInt(675);
-			finishY = new Random().nextInt(300);
+			finishY = new Random().nextInt(374);
 
 		}
 
-		finish = new Item(playerWidth, playerHeight, finishX, finishY, 0, 0, Color.pink, null);
+		if (finishY < 80) {
+			finishY = new Random().nextInt(374);
+			System.out.println("finishY is less");
+		}
+
+		if (finishY > 535) {
+			finishY = new Random().nextInt(374);
+			System.out.println("finishY is less");
+		}
+
 		titleFont = new Font("time new roman", Font.PLAIN, 60);
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
@@ -150,7 +161,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		timeLimit -= 1000 / 6;
 		if (timeLimit <= 0) {
 
-			System.out.println("time out");
 			currentState = END_STATE;
 
 		}
@@ -241,6 +251,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g) {
 
 		g.drawImage(backgroundImage, 0, 0, frameX, frameY, srcx1, 0, srcx2, frameY, this);
+
+		// g.drawRect(finish.x, finish.y, finish.width, finish.height);
 
 		finish.draw(g);
 

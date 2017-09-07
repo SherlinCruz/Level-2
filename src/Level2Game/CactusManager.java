@@ -23,24 +23,23 @@ public class CactusManager {
 
 		try {
 
-			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus.png"));
+			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus1.png"));
 
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < 25; i++) {
 
-				int x = new Random().nextInt(EndlessJump.width - 80);
+				int x = new Random().nextInt(EndlessJump.width - 85);
+				System.out.println("" + x);
 
-				int y = new Random().nextInt(EndlessJump.height - 120);
+				int y = new Random().nextInt(EndlessJump.height - 100);
 
 				while (!checkCactus(x, y)) {
 
-					x++;
+					x = new Random().nextInt(EndlessJump.width - 85);
 
-					// y--;
 					y = new Random().nextInt(EndlessJump.height - 100);
 				}
 
-				// used to be -10!
-				cactusItem = new Item(x, y, 0, 0, null, cactus);
+				cactusItem = new Item(x - 10, y, 0, 0, null, cactus);
 
 				items.add(cactusItem);
 
@@ -58,7 +57,7 @@ public class CactusManager {
 	boolean checkCactus(int x, int y) {
 
 		Rectangle r = new Rectangle(x, y, 35, 32);
-		Rectangle playerBox = new Rectangle(22, 450, 24, 24);
+		Rectangle playerBox = new Rectangle(22, 450, 23, 23);
 
 		for (Item i : items) {
 			if (r.intersects(i.cactusBox)) {
@@ -67,7 +66,7 @@ public class CactusManager {
 				return false;
 			}
 			// if gap between is too small
-			else if ((Math.abs(x - i.x) < 120) && (Math.abs(y - i.y) < 120)) {
+			else if ((Math.abs(x - i.x) < 100) && (Math.abs(y - i.y) < 100)) {
 
 				return false;
 			}
