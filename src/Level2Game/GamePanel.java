@@ -53,6 +53,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font enterFont;
 	Font spaceFont;
 	Font Endtitle;
+	Font Instruction;
 
 	CactusManager cactusManager = new CactusManager();
 
@@ -69,16 +70,28 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		// ++++++
 		while (!cactusManager.checkCactus(finishX, finishY)) {
 			finishX = new Random().nextInt(675);
-			finishY = new Random().nextInt(374);
+			finishY = new Random().nextInt(250);
 
+		}
+		
+		if(cactusManager.checkCactus(finishX, finishY)) {
+			finishX = new Random().nextInt(675);
+			finishY = new Random().nextInt(250);
+		}
+
+		if (player.x == finish.x) {
+			finishY = new Random().nextInt(374);
+		}
+		if (player.y == finish.y) {
+			finishX = new Random().nextInt(300);
 		}
 
 		if (finishY < 80) {
-			finishY = new Random().nextInt(374);
+			finishY = new Random().nextInt(300);
 			System.out.println("finishY is less");
 		}
 
-		if (finishY > 535) {
+		if (finishY > 500) {
 			finishY = new Random().nextInt(374);
 			System.out.println("finishY is less");
 		}
@@ -87,6 +100,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		enterFont = new Font("time new roman", Font.PLAIN, 20);
 		spaceFont = new Font("time new roman", Font.PLAIN, 20);
 		Endtitle = new Font("time new roman", Font.PLAIN, 20);
+		Instruction = new Font("time new roman", Font.PLAIN, 17);
 
 		try {
 
@@ -101,7 +115,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 
 		while (finish.cactusBox.intersects(player.cactusBox)) {
-			finishX = randomNumber.nextInt(675);
+			System.out.println("sos");
+			finishX = randomNumber.nextInt(600);
 			finishY = randomNumber.nextInt(374);
 
 		}
@@ -169,7 +184,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		if (player.timeGiven) {
 
-			timeLimit += 35000;
+			timeLimit += 20000;
 
 			player.timeGiven = false;
 
@@ -219,15 +234,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.setFont(titleFont);
 		g.setColor(Color.black);
-		g.drawString("EndlessJump", 150, 160);
+		g.drawString("EndlessJump", 235, 160);
 
 		g.setFont(enterFont);
 		g.setColor(Color.black);
-		g.drawString("Press ENTER to start ", 160, 210);
+		g.drawString("Press ENTER to start ", 280, 210);
 
 		g.setFont(spaceFont);
 		g.setColor(Color.black);
-		g.drawString("Press SPACE for intructions", 160, 250);
+		g.drawString("Press SPACE for intructions", 250, 250);
 
 	}
 
@@ -235,16 +250,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
 		g.setColor(Color.black);
 		g.setFont(titleFont);
-		g.drawString("Instructions ", 130, 160);
-		g.setFont(spaceFont);
-		g.drawString("Get the player(white dot) to the finish ", 120, 210);
-		g.drawString("(pink dot) without coming near a cactus.", 130, 240);
-		g.drawString("The player will move right until it reaches ", 120, 270);
-		g.drawString("the end of the right screen it will then move ", 130, 300);
-		g.drawString("left until it reaches the end of the left wall. ", 120, 330);
-		g.drawString("Figure out a way to get to the finish line before the ", 130, 360);
-		g.drawString("time is up. Time will be added when player reaches either  ", 120, 390);
-		g.drawString("side of the wall without yet getting to the finish.", 130, 420);
+		g.drawString("Instructions ", 235, 160);
+		g.setFont(Instruction);
+		g.drawString("Goal: Get to the finish(Pink Dot) using the up arrow, while moving right.", 200, 210);
+		g.drawString("If you reach the right wall without reaching the pink dot you will begin moving left", 200, 240);
+		g.drawString("with an additional 20  seconds on the timer to find the pink dot. ", 200, 270);
+		g.drawString("If your time runs out then you loose. Good Luck ", 200, 300);
 
 	}
 

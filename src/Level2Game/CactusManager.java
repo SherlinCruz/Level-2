@@ -23,9 +23,9 @@ public class CactusManager {
 
 		try {
 
-			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus1.png"));
+			BufferedImage cactus = ImageIO.read(getClass().getResource("cactus9.png"));
 
-			for (int i = 0; i < 25; i++) {
+			for (int i = 0; i < 28; i++) {
 
 				int x = new Random().nextInt(EndlessJump.width - 85);
 				System.out.println("" + x);
@@ -36,10 +36,10 @@ public class CactusManager {
 
 					x = new Random().nextInt(EndlessJump.width - 85);
 
-					y = new Random().nextInt(EndlessJump.height - 100);
+					y = new Random().nextInt(EndlessJump.height - 120);
 				}
 
-				cactusItem = new Item(x - 10, y, 0, 0, null, cactus);
+				cactusItem = new Item(x + 10, y + 10, 0, 0, null, cactus);
 
 				items.add(cactusItem);
 
